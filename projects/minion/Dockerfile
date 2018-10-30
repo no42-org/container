@@ -26,8 +26,7 @@ ENV OPENNMS_HTTP_PASS minion
 ENV OPENNMS_BROKER_USER minion
 ENV OPENNMS_BROKER_PASS minion
 
-RUN yum -y --setopt=tsflags=nodocs update && \
-    rpm -Uvh "https://${MIRROR_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.noarch.rpm" && \
+RUN rpm -Uvh "https://${MIRROR_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.noarch.rpm" && \
     rpm --import "https://${MIRROR_HOST}/OPENNMS-GPG-KEY" && \
     curl "${JICMP_RPM}" -o /tmp/jicmp.rpm && \
     curl "${JICMP6_RPM}" -o /tmp/jicmp6.rpm && \
