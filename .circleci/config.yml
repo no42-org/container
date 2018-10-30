@@ -49,6 +49,10 @@ jobs:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/minion
 
+  sentinel:
+    <<: *common_environment
+    working_directory: ~/opennms-container/projects/sentinel
+
 workflows:
   version: 2
   container_build_:
@@ -62,6 +66,10 @@ workflows:
             - shellcheck
             - openjdk
       - minion:
+          requires:
+            - shellcheck
+            - openjdk
+      - sentinel:
           requires:
             - shellcheck
             - openjdk

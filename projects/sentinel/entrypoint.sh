@@ -59,7 +59,7 @@ initConfig() {
         exit ${E_ILLEGAL_ARGS}
     fi
 
-    if [ ! -f "${SENTINEL_HOME}/etc/configured}" ]; then
+    if [ ! -f "${SENTINEL_HOME}/etc/configured" ]; then
         # Expose Karaf Shell
         sed -i "s,sshHost=127.0.0.1,sshHost=0.0.0.0," "${SENTINEL_HOME}/etc/org.apache.karaf.shell.cfg"
 
@@ -68,21 +68,21 @@ initConfig() {
         sed -i "s,rmiServerHost.*,rmiServerHost=0.0.0.0,g" "${SENTINEL_HOME}/etc/org.apache.karaf.management.cfg"
 
         # Set Sentinel location and connection to OpenNMS instance
-        SENTINEL_CONFIG=${SENTINEL_HOME}/etc/org.opennms.sentinel.controller.cfg
+        SENTINEL_CONFIG="${SENTINEL_HOME}/etc/org.opennms.sentinel.controller.cfg"
         echo "location = ${SENTINEL_LOCATION}" > "${SENTINEL_CONFIG}"
         echo "id = ${SENTINEL_ID:=$(uuidgen)}" >> "${SENTINEL_CONFIG}"
         echo "broker-url = ${OPENNMS_BROKER_URL}" >> "${SENTINEL_CONFIG}"
         echo "http-url = ${OPENNMS_HTTP_URL}" >> "${SENTINEL_CONFIG}"
 
         # Configure datasource
-        DB_CONFIG=${SENTINEL_HOME}/etc/org.opennms.netmgt.distributed.datasource.cfg
+        DB_CONFIG="${SENTINEL_HOME}/etc/org.opennms.netmgt.distributed.datasource.cfg"
         echo "datasource.url = jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}" > "${DB_CONFIG}"
         echo "datasource.username = ${POSTGRES_USER}" >> "${DB_CONFIG}"
         echo "datasource.password = ${POSTGRES_PASSWORD}" >> "${DB_CONFIG}"
         echo "datasource.databaseName = ${POSTGRES_DB}" >> "${DB_CONFIG}"
 
         # Mark as configured
-        echo "Configured $(date)" > "${SENTINEL_HOME}/etc/configured"
+        echo "Configured $(date)" >" ${SENTINEL_HOME}/etc/configured"
     else
         echo "OpenNMS Sentinel is already configured, skipped."
     fi

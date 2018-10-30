@@ -2,10 +2,17 @@
 
 # shellcheck disable=SC2034
 
-# Configure base image dependency
-MAJOR_VERSION="7"
-VERSION="${MAJOR_VERSION}.5.1804"
-CENTOS_BASE_IMAGE="centos:${VERSION}"
+# Dependencies
+JDK_VERSION="1.8.0.191.b12"
+JDK_BASE_IMAGE="no42org/openjdk:${JDK_VERSION}"
+
+# Configure container specifics
+MIRROR_HOST="yum.opennms.org"
+REPO_RELEASE="stable"
+VERSION="23.0.0"
+
+# Packages
+PACKAGES="opennms-sentinel"
 
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"

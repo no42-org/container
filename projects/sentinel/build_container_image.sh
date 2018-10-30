@@ -6,8 +6,11 @@ set -x
 source ./config.sh
 
 docker build -t "${CONTAINER_PROJECT}" \
-  --build-arg MAJOR_VERSION="${MAJOR_VERSION}" \
+  --build-arg JDK_BASE_IMAGE="${JDK_BASE_IMAGE}" \
+  --build-arg PACKAGES="${PACKAGES}" \
   --build-arg VERSION="${VERSION}" \
+  --build-arg REPO_RELEASE="${REPO_RELEASE}" \
+  --build-arg MIRROR_HOST="${MIRROR_HOST}" \
   --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")" \
   .
 
