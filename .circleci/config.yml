@@ -36,6 +36,11 @@ jobs:
           command: |
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources -e SC2129,SC2001,SC2013
+
+  openjdk:
+    <<: *common_environment
+    working_directory: ~/opennms-container/projects/openjdk
+
   horizon:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/horizon
@@ -49,9 +54,14 @@ workflows:
   container_build_:
     jobs:
       - shellcheck
+      - openjdk:
+          requires:
+            - shellcheck
       - horizon:
           requires:
             - shellcheck
+            - openjdk
       - minion:
           requires:
             - shellcheck
+            - openjdk

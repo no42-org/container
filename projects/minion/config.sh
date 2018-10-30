@@ -1,10 +1,11 @@
 #!/bin/bash -e
 
+
 # shellcheck disable=SC2034
 
 # Dependencies
-JDK_VERSION="8u191-jdk"
-JDK_BASE_IMAGE="opennms/openjdk:${JDK_VERSION}"
+JDK_VERSION="1.8.0.191.b12"
+JDK_BASE_IMAGE="no42org/openjdk:${JDK_VERSION}"
 JICMP_RPM="https://yum.opennms.org/stable/rhel7/jicmp/jicmp-2.0.3-1.el7.centos.x86_64.rpm"
 JICMP6_RPM="https://yum.opennms.org/stable/rhel7/jicmp6/jicmp6-2.0.2-1.el7.centos.x86_64.rpm"
 
