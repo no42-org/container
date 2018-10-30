@@ -1,4 +1,6 @@
-FROM centos:7
+ARG CENTOS_BASE_IMAGE=centos:7
+
+FROM ${CENTOS_BASE_IMAGE}
 
 LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 

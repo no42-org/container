@@ -2,13 +2,10 @@
 
 # shellcheck disable=SC2034
 
-# Dependencies
-CENTOS_VERSION="7.5.1804"
-CENTOS_BASE_IMAGE="centos:${CENTOS_VERSION}"
-
-# Specific container config
-MAJOR_VERSION="1.8.0"
-VERSION="${MAJOR_VERSION}.191.b12"
+# Configure base image dependency
+MAJOR_VERSION="7"
+VERSION="${MAJOR_VERSION}.5.1804"
+CENTOS_BASE_IMAGE="centos:${VERSION}"
 
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"
