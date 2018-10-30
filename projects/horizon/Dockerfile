@@ -15,8 +15,7 @@ ARG BUILD_DATE="1970-01-01T00:00:00+0000"
 ENV OPENNMS_KARAF_SSH_HOST 0.0.0.0
 ENV OPENNMS_KARAF_SSH_PORT 8101
 
-RUN yum -y --setopt=tsflags=nodocs update && \
-    rpm -Uvh "https://${MIRROR_HOST}/repofiles/opennms-repo-${REPO_RELEASE/\//-}-rhel7.noarch.rpm" && \
+RUN rpm -Uvh "https://${MIRROR_HOST}/repofiles/opennms-repo-${REPO_RELEASE/\//-}-rhel7.noarch.rpm" && \
     rpm --import "https://${MIRROR_HOST}/OPENNMS-GPG-KEY" && \
     curl "${JICMP_RPM}" -o /tmp/jicmp.rpm && \
     curl "${JICMP6_RPM}" -o /tmp/jicmp6.rpm && \
