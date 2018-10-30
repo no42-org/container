@@ -1,0 +1,9 @@
+ARG CENTOS_BASE_IMAGE=centos:7
+
+FROM ${CENTOS_BASE_IMAGE}
+
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
+
+ARG MAJOR_VERSION=7
+ARG VERSION="${MAJOR_VERSION}.5.1804"
+
