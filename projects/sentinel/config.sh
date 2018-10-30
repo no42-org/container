@@ -3,13 +3,18 @@
 # shellcheck disable=SC2034
 
 # Dependencies
-JDK_VERSION="1.8.0.191.b12"
+JDK_VERSION="1.8.0.191.b12-b146"
 JDK_BASE_IMAGE="no42org/openjdk:${JDK_VERSION}"
 
 # Configure container specifics
 MIRROR_HOST="yum.opennms.org"
 REPO_RELEASE="stable"
 VERSION="23.0.0"
+IMAGE_VERSION="{VERSION}"
+
+if [ ! -z ${CIRCLE_BUILD_NUM+x} ]; then
+  IMAGE_VERSION="${VERSION}-b${CIRCLE_BUILD_NUM}"
+fi
 
 # Packages
 PACKAGES="opennms-sentinel"
@@ -18,7 +23,7 @@ PACKAGES="opennms-sentinel"
 CONTAINER_PROJECT="$(basename "$(pwd)")"
 CONTAINER_REGISTRY="docker.io"
 CONTAINER_REGISTRY_REPO="no42org"
-CONTAINER_VERSION_TAGS=("${VERSION}" "latest")
+CONTAINER_VERSION_TAGS=("${IMAGE_VERSION}" "latest")
 
 # Container Image Artifact
 CONTAINER_IMAGE="images/image.oci"

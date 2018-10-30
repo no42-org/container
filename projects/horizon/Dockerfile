@@ -1,28 +1,42 @@
-ARG JDK_BASE_IMAGE=opennms/openjdk:latest
+ARG JDK_BASE_IMAGE="opennms/openjdk:latest"
 
 FROM ${JDK_BASE_IMAGE}
 
 LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
-ARG REPO_RELEASE="stable"
-ARG VERSION="stable"
-ARG MIRROR_HOST=yum.opennms.org
-ARG PACKAGES="gettext iplike iplike rrdtool jrrd2 opennms-core opennms-webapp-jetty opennms-plugin-protocol-cifs opennms-webapp-hawtio"
-ARG JICMP_RPM="https://yum.opennms.org/stable/rhel7/jicmp/jicmp-2.0.3-1.el7.centos.x86_64.rpm"
-ARG JICMP6_RPM="https://yum.opennms.org/stable/rhel7/jicmp6/jicmp6-2.0.2-1.el7.centos.x86_64.rpm"
+#
+# Required docker build parameters
+#
 ARG BUILD_DATE="1970-01-01T00:00:00+0000"
+ARG LOCAL_RPMS="false"
+
+ARG VERSION="23.0.0"
+ARG REPO_RELEASE="stable"
+ARG REPO_HOST="yum.opennms.org"
+
+ARG REPO_URL="https://${REPO_HOST}/${REPO_RELEASE}/common/opennms"
+ARG REPO_RPM_URL="https://${REPO_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.noarch.rpm"
+ARG REPO_KEY_URL="https://${REPO_HOST}/OPENNMS-GPG-KEY"
+
+ARG PACKAGES="wget gettext"
+ARG OPENNMS_PACKAGES="opennms-core-${VERSION}-1.noarch.rpm opennms-webapp-jetty-${VERSION}-1.noarch.rpm"
 
 ENV OPENNMS_KARAF_SSH_HOST 0.0.0.0
 ENV OPENNMS_KARAF_SSH_PORT 8101
 
-RUN rpm -Uvh "https://${MIRROR_HOST}/repofiles/opennms-repo-${REPO_RELEASE/\//-}-rhel7.noarch.rpm" && \
-    rpm --import "https://${MIRROR_HOST}/OPENNMS-GPG-KEY" && \
-    curl "${JICMP_RPM}" -o /tmp/jicmp.rpm && \
-    curl "${JICMP6_RPM}" -o /tmp/jicmp6.rpm && \
-    yum -y install /tmp/jicmp.rpm && \
-    yum -y install /tmp/jicmp6.rpm && \
-    yum -y install epel-release && \
-    for PKG in ${PACKAGES}; do yum -y install "${PKG}"; done && \
+COPY ./rpms /tmp/rpms
+COPY ./config.sh /tmp/config.sh
+
+SHELL ["/bin/bash", "-c"]
+
+# Install repositories, system and OpenNMS packages and do some cleanup
+RUN yum -y install epel-release && \
+    yum -y install "${REPO_RPM_URL}" && \
+    rpm --import "${REPO_KEY_URL}" && \
+    yum -y install ${PACKAGES} && \
+    if [ "${LOCAL_RPMS}" == "false" ]; then for OPENNMS_PKG in ${OPENNMS_PACKAGES}; do wget -q --no-clobber "${REPO_URL}/${OPENNMS_PKG}" -P /tmp/rpms; done fi && \
+    cd /tmp/rpms && yum -y localinstall *.rpm && cd - && \
+    rm -rf /tmp/rpms && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     rm -rf /opt/opennms/logs \
@@ -53,9 +67,9 @@ LABEL license="AGPLv3" \
 
 WORKDIR /opt/opennms
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+# ENTRYPOINT [ "/entrypoint.sh" ]
 
-CMD [ "-h" ]
+# CMD [ "-h" ]
 
 ##------------------------------------------------------------------------------
 ## EXPOSED PORTS

@@ -1,29 +1,52 @@
 #!/bin/bash -e
 
-
 # shellcheck disable=SC2034
 
 # Dependencies
-JDK_VERSION="1.8.0.191.b12"
+JDK_VERSION="1.8.0.191.b12-b146"
 JDK_BASE_IMAGE="no42org/openjdk:${JDK_VERSION}"
-JICMP_RPM="https://yum.opennms.org/stable/rhel7/jicmp/jicmp-2.0.3-1.el7.centos.x86_64.rpm"
-JICMP6_RPM="https://yum.opennms.org/stable/rhel7/jicmp6/jicmp6-2.0.2-1.el7.centos.x86_64.rpm"
+BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Horizon RPM repository config and version
-MIRROR_HOST="yum.opennms.org"
+LOCAL_RPMS="false"
+REPO_HOST="yum.opennms.org"
 REPO_RELEASE="stable"
 VERSION="23.0.0"
+IMAGE_VERSION="{VERSION}"
+
+if [ ! -z ${CIRCLE_BUILD_NUM+x} ]; then
+  IMAGE_VERSION="${VERSION}-b${CIRCLE_BUILD_NUM}"
+fi
+
+REPO_RPM_URL="https://${REPO_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.noarch.rpm"
+REPO_KEY_URL="https://${REPO_HOST}/OPENNMS-GPG-KEY"
+REPO_URL="https://${REPO_HOST}/${REPO_RELEASE}/common/opennms"
 
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"
 CONTAINER_REGISTRY="docker.io"
 CONTAINER_REGISTRY_REPO="no42org"
-CONTAINER_VERSION_TAGS=("${VERSION}" "latest")
+CONTAINER_VERSION_TAGS=("${IMAGE_VERSION}"
+                        "latest")
 
 # Container Image Artifact
 CONTAINER_IMAGE="images/image.oci"
 
-# Packages
-PACKAGES="gettext iplike iplike rrdtool jrrd2"
-PACKAGES="${PACKAGES} R-core"
-PACKAGES="${PACKAGES} opennms-core opennms-webapp-jetty opennms-plugin-protocol-cifs opennms-webapp-hawtio"
+# System Packages
+PACKAGES="wget
+          gettext"
+
+# OpenNMS specific dependencies
+PACKAGES="${PACKAGES}
+          rrdtool
+          iplike
+          jicmp
+          jicmp6
+          jrrd2
+          R-core"
+
+# OpenNMS Horizon Packages
+OPENNMS_PACKAGES="opennms-core-${VERSION}-1.noarch.rpm
+                  opennms-webapp-jetty-${VERSION}-1.noarch.rpm
+                  opennms-plugin-protocol-cifs-${VERSION}-1.noarch.rpm
+                  opennms-webapp-hawtio-${VERSION}-1.noarch.rpm"

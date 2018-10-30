@@ -7,6 +7,9 @@
 #
 # =====================================================================
 
+# Cause false/positives
+# shellcheck disable=SC2086
+
 # Error codes
 E_ILLEGAL_ARGS=126
 
@@ -28,8 +31,8 @@ usage() {
 useEnvCredentials(){
   echo "WARNING: Credentials can be exposed via docker inspect and log files. Please consider to use a keystore file."
   echo "         You can initialize a keystore file with the -s option."
-  "${MINION_HOME}/bin/scvcli set opennms.http" "${OPENNMS_HTTP_USER}" "${OPENNMS_HTTP_PASS}"
-  "${MINION_HOME}/bin/scvcli set opennms.broker" "${OPENNMS_BROKER_USER}" "${OPENNMS_BROKER_PASS}"
+  ${MINION_HOME}/bin/scvcli set opennms.http ${OPENNMS_HTTP_USER} ${OPENNMS_HTTP_PASS}
+  ${MINION_HOME}/bin/scvcli set opennms.broker ${OPENNMS_BROKER_USER} ${OPENNMS_BROKER_PASS}
 }
 
 setCredentials() {
@@ -46,10 +49,10 @@ setCredentials() {
   read -r -s -p "Enter OpenNMS Broker password: " OPENNMS_BROKER_PASS
   echo ""
 
-  "${MINION_HOME}/bin/scvcli set opennms.http" "${OPENNMS_HTTP_USER}" "${OPENNMS_HTTP_PASS}"
-  "${MINION_HOME}/bin/scvcli set opennms.broker" "${OPENNMS_BROKER_USER}" "${OPENNMS_BROKER_PASS}"
+  ${MINION_HOME}/bin/scvcli set opennms.http ${OPENNMS_HTTP_USER} ${OPENNMS_HTTP_PASS}
+  ${MINION_HOME}/bin/scvcli set opennms.broker ${OPENNMS_BROKER_USER} ${OPENNMS_BROKER_PASS}
 
-  cp "${MINION_HOME}/etc/scv.jce" /keystore
+  cp ${MINION_HOME}/etc/scv.jce /keystore
 }
 
 function updateConfig() {
@@ -84,8 +87,8 @@ function parseEnvironment() {
             rpc_name=$(echo "$env_var" | cut -d_ -f3- | tr '[:upper:]' '[:lower:]' | tr _ .)
             updateConfig "$rpc_name" "${!env_var}" "${MINION_HOME}/etc/org.opennms.core.ipc.rpc.kafka.cfg"
             if [[ "$rpc_name" == "bootstrap.servers" ]]; then
-                echo "!opennms-core-ipc-rpc-jms"   > "${MINION_HOME}/etc/featuresBoot.d/kafka-rpc.boot"
-                echo "opennms-core-ipc-rpc-kafka" >> "${MINION_HOME}/etc/featuresBoot.d/kafka-rpc.boot"
+                echo "!opennms-core-ipc-rpc-jms"   > ${MINION_HOME}/etc/featuresBoot.d/kafka-rpc.boot
+                echo "opennms-core-ipc-rpc-kafka" >> ${MINION_HOME}/etc/featuresBoot.d/kafka-rpc.boot
             fi
         fi
 
@@ -93,51 +96,51 @@ function parseEnvironment() {
             sink_key=$(echo "$env_var" | cut -d_ -f3- | tr '[:upper:]' '[:lower:]' | tr _ .)
             updateConfig "$sink_key" "${!env_var}" "${MINION_HOME}/etc/org.opennms.core.ipc.sink.kafka.cfg"
             if [[ "$sink_key" == "bootstrap.servers" ]]; then
-                echo "!opennms-core-ipc-sink-camel" > "${MINION_HOME}/etc/featuresBoot.d/kafka-sink.boot"
-                echo "opennms-core-ipc-sink-kafka" >> "${MINION_HOME}/etc/featuresBoot.d/kafka-sink.boot"
+                echo "!opennms-core-ipc-sink-camel" > ${MINION_HOME}/etc/featuresBoot.d/kafka-sink.boot
+                echo "opennms-core-ipc-sink-kafka" >> ${MINION_HOME}/etc/featuresBoot.d/kafka-sink.boot
             fi
         fi
 
         if [[ $env_var =~ ^UDP_ ]]; then
             udp_data=$(echo "$env_var" | cut -d_ -f2- | tr '[:upper:]' '[:lower:]' | tr _ .)
-            udp_port=$(echo "$udp_data" | sed 's/\..*//')
-            udp_key=$(echo "$udp_data" | sed -r 's/^[0-9]+\.//')
+            udp_port=$(echo $udp_data | sed 's/\..*//')
+            udp_key=$(echo $udp_data | sed -r 's/^[0-9]+\.//')
             updateConfig "$udp_key" "${!env_var}" "${MINION_HOME}/etc/org.opennms.features.telemetry.listeners-udp-$udp_port.cfg"
         fi
     done
 }
 
 initConfig() {
-    if [ ! -d "${MINION_HOME}" ]; then
+    if [ ! -d ${MINION_HOME} ]; then
         echo "OpenNMS Minion home directory doesn't exist in ${MINION_HOME}."
         exit ${E_ILLEGAL_ARGS}
     fi
 
-    if [ ! -f "${MINION_HOME}/etc/configured" ]; then
+    if [ ! -f ${MINION_HOME}/etc/configured ]; then
 
         # Expose Karaf Shell
-        sed -i "/^sshHost/s/=.*/= 0.0.0.0/" "${MINION_HOME}/etc/org.apache.karaf.shell.cfg"
+        sed -i "/^sshHost/s/=.*/= 0.0.0.0/" ${MINION_HOME}/etc/org.apache.karaf.shell.cfg
 
         # Expose the RMI registry and server
-        sed -i "/^rmiRegistryHost/s/=.*/= 0.0.0.0/" "${MINION_HOME}/etc/org.apache.karaf.management.cfg"
-        sed -i "/^rmiServerHost/s/=.*/= 0.0.0.0/" "${MINION_HOME}/etc/org.apache.karaf.management.cfg"
+        sed -i "/^rmiRegistryHost/s/=.*/= 0.0.0.0/" ${MINION_HOME}/etc/org.apache.karaf.management.cfg
+        sed -i "/^rmiServerHost/s/=.*/= 0.0.0.0/" ${MINION_HOME}/etc/org.apache.karaf.management.cfg
 
         # Set Minion location and connection to OpenNMS instance
-        echo "location = ${MINION_LOCATION}" > "${MINION_CONFIG}"
-        echo "id = ${MINION_ID}" >> "${MINION_CONFIG}"
-        echo "broker-url = ${OPENNMS_BROKER_URL}" >> "${MINION_CONFIG}"
-        echo "http-url = ${OPENNMS_HTTP_URL}" >> "${MINION_CONFIG}"
+        echo "location = ${MINION_LOCATION}" > ${MINION_CONFIG}
+        echo "id = ${MINION_ID}" >> ${MINION_CONFIG}
+        echo "broker-url = ${OPENNMS_BROKER_URL}" >> ${MINION_CONFIG}
+        echo "http-url = ${OPENNMS_HTTP_URL}" >> ${MINION_CONFIG}
 
         parseEnvironment
 
-        echo "Configured $(date)" > "${MINION_HOME}/etc/configured"
+        echo "Configured $(date)" > ${MINION_HOME}/etc/configured
     else
         echo "OpenNMS Minion is already configured, skipped."
     fi
 }
 
 start() {
-    cd "${MINION_HOME}/bin"
+    cd ${MINION_HOME}/bin
     ./karaf server
 }
 

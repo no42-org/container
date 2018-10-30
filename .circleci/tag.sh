@@ -7,3 +7,4 @@ source ./config.sh
 for TAG in ${CONTAINER_VERSION_TAGS[*]}; do
   docker tag "${CONTAINER_PROJECT}:latest" "${CONTAINER_REGISTRY}/${CONTAINER_REGISTRY_REPO}/${CONTAINER_PROJECT}:${TAG}"
 done
+docker images

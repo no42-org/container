@@ -7,6 +7,9 @@
 #
 # =====================================================================
 
+# Cause false/positives
+# shellcheck disable=SC2086
+
 OPENNMS_HOME=/opt/opennms
 
 OPENNMS_DATASOURCES_TPL=/root/opennms-datasources.xml.tpl
@@ -130,16 +133,16 @@ applyKarafDebugLogging() {
 
 # Start opennms in foreground
 start() {
-  local OPENNMS_JAVA_OPTS="-Djava.endorsed.dirs=/opt/opennms/lib/endorsed \
-  -Dopennms.home=/opt/opennms \
-  -Dcom.sun.management.jmxremote.authenticate=true \
-  -Dcom.sun.management.jmxremote.login.config=opennms \
-  -Dcom.sun.management.jmxremote.access.file=/opt/opennms/etc/jmxremote.access \
-  -DisThreadContextMapInheritable=true \
-  -Dgroovy.use.classvalue=true \
-  -Djava.io.tmpdir=/opt/opennms/data/tmp \
-  -XX:+HeapDumpOnOutOfMemoryError"
-  exec java "${OPENNMS_JAVA_OPTS}" "${JAVA_OPTS}" -jar /opt/opennms/lib/opennms_bootstrap.jar start
+  local OPENNMS_JAVA_OPTS=("-Djava.endorsed.dirs=/opt/opennms/lib/endorsed"
+                           "-Dopennms.home=/opt/opennms"
+                           "-Dcom.sun.management.jmxremote.authenticate=true"
+                           "-Dcom.sun.management.jmxremote.login.config=opennms"
+                           "-Dcom.sun.management.jmxremote.access.file=/opt/opennms/etc/jmxremote.access"
+                           "-DisThreadContextMapInheritable=true"
+                           "-Dgroovy.use.classvalue=true"
+                           "-Djava.io.tmpdir=/opt/opennms/data/tmp"
+                           "-XX:+HeapDumpOnOutOfMemoryError")
+  exec java ${OPENNMS_JAVA_OPTS[*]} ${JAVA_OPTS} -jar /opt/opennms/lib/opennms_bootstrap.jar start
 }
 
 testConfig() {

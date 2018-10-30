@@ -7,6 +7,9 @@
 #
 # =====================================================================
 
+# Cause false/positives
+# shellcheck disable=SC2086
+
 # Error codes
 E_ILLEGAL_ARGS=126
 
@@ -29,8 +32,8 @@ usage() {
 useEnvCredentials(){
   echo "WARNING: Credentials can be exposed via docker inspect and log files. Please consider to use a keystore file."
   echo "         You can initialize a keystore file with the -s option."
-  "${SENTINEL_HOME}/bin/scvcli" set opennms.http "${OPENNMS_HTTP_USER}" "${OPENNMS_HTTP_PASS}"
-  "${SENTINEL_HOME}/bin/scvcli" set opennms.broker "${OPENNMS_BROKER_USER}" "${OPENNMS_BROKER_PASS}"
+  ${SENTINEL_HOME}/bin/scvcli set opennms.http ${OPENNMS_HTTP_USER} ${OPENNMS_HTTP_PASS}
+  ${SENTINEL_HOME}/bin/scvcli set opennms.broker ${OPENNMS_BROKER_USER} ${OPENNMS_BROKER_PASS}
 }
 
 setCredentials() {
@@ -47,50 +50,50 @@ setCredentials() {
   read -r -s -p "Enter OpenNMS Broker password: " OPENNMS_BROKER_PASS
   echo ""
 
-  "${SENTINEL_HOME}/bin/scvcli" set opennms.http "${OPENNMS_HTTP_USER}" "${OPENNMS_HTTP_PASS}"
-  "${SENTINEL_HOME}/bin/scvcli" set opennms.broker "${OPENNMS_BROKER_USER}" "${OPENNMS_BROKER_PASS}"
+  ${SENTINEL_HOME}/bin/scvcli set opennms.http ${OPENNMS_HTTP_USER} ${OPENNMS_HTTP_PASS}
+  ${SENTINEL_HOME}/bin/scvcli set opennms.broker ${OPENNMS_BROKER_USER} ${OPENNMS_BROKER_PASS}
 
-  cp "${SENTINEL_HOME}/etc/scv.jce" /keystore
+  cp ${SENTINEL_HOME}/etc/scv.jce /keystore
 }
 
 initConfig() {
-    if [ ! -d "${SENTINEL_HOME}" ]; then
+    if [ ! -d ${SENTINEL_HOME} ]; then
         echo "OpenNMS Sentinel home directory doesn't exist in ${SENTINEL_HOME}."
         exit ${E_ILLEGAL_ARGS}
     fi
 
-    if [ ! -f "${SENTINEL_HOME}/etc/configured" ]; then
+    if [ ! -f ${SENTINEL_HOME}/etc/configured ]; then
         # Expose Karaf Shell
-        sed -i "s,sshHost=127.0.0.1,sshHost=0.0.0.0," "${SENTINEL_HOME}/etc/org.apache.karaf.shell.cfg"
+        sed -i "s,sshHost=127.0.0.1,sshHost=0.0.0.0," ${SENTINEL_HOME}/etc/org.apache.karaf.shell.cfg
 
         # Expose the RMI registry and server
-        sed -i "s,rmiRegistryHost.*,rmiRegistryHost=0.0.0.0,g" "${SENTINEL_HOME}/etc/org.apache.karaf.management.cfg"
-        sed -i "s,rmiServerHost.*,rmiServerHost=0.0.0.0,g" "${SENTINEL_HOME}/etc/org.apache.karaf.management.cfg"
+        sed -i "s,rmiRegistryHost.*,rmiRegistryHost=0.0.0.0,g" ${SENTINEL_HOME}/etc/org.apache.karaf.management.cfg
+        sed -i "s,rmiServerHost.*,rmiServerHost=0.0.0.0,g" ${SENTINEL_HOME}/etc/org.apache.karaf.management.cfg
 
         # Set Sentinel location and connection to OpenNMS instance
-        SENTINEL_CONFIG="${SENTINEL_HOME}/etc/org.opennms.sentinel.controller.cfg"
-        echo "location = ${SENTINEL_LOCATION}" > "${SENTINEL_CONFIG}"
-        echo "id = ${SENTINEL_ID:=$(uuidgen)}" >> "${SENTINEL_CONFIG}"
-        echo "broker-url = ${OPENNMS_BROKER_URL}" >> "${SENTINEL_CONFIG}"
-        echo "http-url = ${OPENNMS_HTTP_URL}" >> "${SENTINEL_CONFIG}"
+        SENTINEL_CONFIG=${SENTINEL_HOME}/etc/org.opennms.sentinel.controller.cfg
+        echo "location = ${SENTINEL_LOCATION}" > ${SENTINEL_CONFIG}
+        echo "id = ${SENTINEL_ID:=$(uuidgen)}" >> ${SENTINEL_CONFIG}
+        echo "broker-url = ${OPENNMS_BROKER_URL}" >> ${SENTINEL_CONFIG}
+        echo "http-url = ${OPENNMS_HTTP_URL}" >> ${SENTINEL_CONFIG}
 
         # Configure datasource
-        DB_CONFIG="${SENTINEL_HOME}/etc/org.opennms.netmgt.distributed.datasource.cfg"
-        echo "datasource.url = jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}" > "${DB_CONFIG}"
-        echo "datasource.username = ${POSTGRES_USER}" >> "${DB_CONFIG}"
-        echo "datasource.password = ${POSTGRES_PASSWORD}" >> "${DB_CONFIG}"
-        echo "datasource.databaseName = ${POSTGRES_DB}" >> "${DB_CONFIG}"
+        DB_CONFIG=${SENTINEL_HOME}/etc/org.opennms.netmgt.distributed.datasource.cfg
+        echo "datasource.url = jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}" > ${DB_CONFIG}
+        echo "datasource.username = ${POSTGRES_USER}" >> ${DB_CONFIG}
+        echo "datasource.password = ${POSTGRES_PASSWORD}" >> ${DB_CONFIG}
+        echo "datasource.databaseName = ${POSTGRES_DB}" >> ${DB_CONFIG}
 
         # Mark as configured
-        echo "Configured $(date)" >" ${SENTINEL_HOME}/etc/configured"
+        echo "Configured $(date)" > ${SENTINEL_HOME}/etc/configured
     else
         echo "OpenNMS Sentinel is already configured, skipped."
     fi
 }
 
 start() {
-    cd "${SENTINEL_HOME}/bin"
-    ./karaf server "${SENTINEL_DEBUG}"
+    cd ${SENTINEL_HOME}/bin
+    ./karaf server ${SENTINEL_DEBUG}
 }
 
 # Evaluate arguments for build script.
