@@ -10,6 +10,9 @@
 # Cause false/positives
 # shellcheck disable=SC2086
 
+MINION_HOME="/opt/minion"
+MINION_CONFIG="/opt/minion/etc/org.opennms.minion.controller.cfg"
+
 # Error codes
 E_ILLEGAL_ARGS=126
 

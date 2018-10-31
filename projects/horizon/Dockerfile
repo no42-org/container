@@ -2,11 +2,6 @@ ARG JDK_BASE_IMAGE="opennms/openjdk:latest"
 
 FROM ${JDK_BASE_IMAGE}
 
-LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
-
-#
-# Required docker build parameters
-#
 ARG BUILD_DATE="1970-01-01T00:00:00+0000"
 ARG LOCAL_RPMS="false"
 
@@ -19,13 +14,11 @@ ARG REPO_RPM_URL="https://${REPO_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rh
 ARG REPO_KEY_URL="https://${REPO_HOST}/OPENNMS-GPG-KEY"
 
 ARG PACKAGES="wget gettext"
+
+# This can be unset if LOCAL_RPMS is set to "true"
 ARG OPENNMS_PACKAGES="opennms-core-${VERSION}-1.noarch.rpm opennms-webapp-jetty-${VERSION}-1.noarch.rpm"
 
-ENV OPENNMS_KARAF_SSH_HOST 0.0.0.0
-ENV OPENNMS_KARAF_SSH_PORT 8101
-
 COPY ./rpms /tmp/rpms
-COPY ./config.sh /tmp/config.sh
 
 SHELL ["/bin/bash", "-c"]
 
@@ -49,16 +42,12 @@ RUN yum -y install epel-release && \
     ln -s /opennms-data/rrd /var/opennms/rrd && \
     ln -s /opennms-data/reports /var/opennms/reports
 
-COPY ./assets/opennms-datasources.xml.tpl /root
-COPY ./assets/org.apache.karaf.shell.cfg.tpl /root
-COPY ./assets/newts.properties.tpl /root
-
+# Add templates replaced at runtime and entrypoint
+COPY ./assets/*.tpl /root/
 COPY ./entrypoint.sh /
 
-## Volumes for storing data outside of the container
-VOLUME [ "/opt/opennms/etc", "/opt/opennms-etc-overlay", "/opennms-data" ]
-
-LABEL license="AGPLv3" \
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>" \
+      license="AGPLv3" \
       org.opennms.repo.release="${REPO_RELEASE}" \
       org.opennms.horizon.version="${VERSION}" \
       org.opennms.build.date="${BUILD_DATE}" \
@@ -67,9 +56,18 @@ LABEL license="AGPLv3" \
 
 WORKDIR /opt/opennms
 
-# ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
 
-# CMD [ "-h" ]
+CMD [ "-h" ]
+
+### Runtime information and not relevant at build time
+
+ENV OPENNMS_KARAF_SSH_HOST 0.0.0.0
+ENV OPENNMS_KARAF_SSH_PORT 8101
+ENV JAVA_OPTS ""
+
+# Volumes for storing data outside of the container
+VOLUME [ "/opt/opennms/etc", "/opt/opennms-etc-overlay", "/opennms-data" ]
 
 ##------------------------------------------------------------------------------
 ## EXPOSED PORTS
