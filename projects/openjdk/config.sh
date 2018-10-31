@@ -3,7 +3,7 @@
 # shellcheck disable=SC2034
 
 # Dependencies
-CENTOS_VERSION="7.5.1804-b130"
+CENTOS_VERSION="7.5.1804-b1"
 CENTOS_BASE_IMAGE="no42org/centos:${CENTOS_VERSION}"
 
 # Specific container config

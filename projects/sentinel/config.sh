@@ -3,7 +3,7 @@
 # shellcheck disable=SC2034
 
 # Dependencies
-JDK_VERSION="1.8.0.191.b12-b146"
+JDK_VERSION="1.8.0.191.b12-b1"
 JDK_BASE_IMAGE="no42org/openjdk:${JDK_VERSION}"
 
 # Configure container specifics
