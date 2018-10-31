@@ -18,6 +18,9 @@ ARG PACKAGES="gettext wget"
 # This can be unset if LOCAL_RPMS is set to "true"
 ARG OPENNMS_PACKAGES="opennms-sentinel-${VERSION}-1.noarch.rpm"
 
+ARG USER="root"
+ARG GROUP="root"
+
 COPY ./rpms /tmp/rpms
 
 SHELL ["/bin/bash", "-c"]
@@ -31,9 +34,9 @@ RUN yum -y install epel-release && \
     cd /tmp/rpms && yum -y localinstall *.rpm && cd - && \
     rm -rf /tmp/rpms && \
     yum clean all && \
-    chown -R sentinel:sentinel /opt/sentinel
+    chown -R ${USER}:${GROUP} /opt/sentinel
 
-USER sentinel
+USER ${USER}
 
 COPY ./entrypoint.sh /
 
@@ -55,22 +58,19 @@ CMD [ "-h" ]
 ### Runtime information and not relevant at build time
 
 # TODO MVR SENTINEL_LOCATION is not used at the moment
-ENV SENTINEL_ID=
-ENV SENTINEL_LOCATION=SENTINEL
-
-ENV OPENNMS_BROKER_URL=tcp://127.0.0.1:61616
-ENV OPENNMS_HTTP_URL=http://127.0.0.1:8980/opennms
-
-ENV OPENNMS_HTTP_USER minion
-ENV OPENNMS_HTTP_PASS minion
-ENV OPENNMS_BROKER_USER minion
-ENV OPENNMS_BROKER_PASS minion
-
-ENV POSTGRES_HOST=localhost
-ENV POSTGRES_PORT=5432
-ENV POSTGRES_USER=postgres
-ENV POSTGRES_PASSWORD=
-ENV POSTGRES_DB=opennms
+ENV SENTINEL_ID="" \
+    SENTINEL_LOCATION="SENTINEL" \
+    OPENNMS_BROKER_URL="tcp://127.0.0.1:61616" \
+    OPENNMS_HTTP_URL="http://127.0.0.1:8980/opennms" \
+    OPENNMS_HTTP_USER="minion" \
+    OPENNMS_HTTP_PASS="minion" \
+    OPENNMS_BROKER_USER="minion" \
+    OPENNMS_BROKER_PASS="minion" \
+    POSTGRES_HOST="localhost" \
+    POSTGRES_PORT="5432" \
+    POSTGRES_USER="postgres" \
+    POSTGRES_PASSWORD="" \
+    POSTGRES_DB="opennms"
 
 ##------------------------------------------------------------------------------
 ## EXPOSED PORTS

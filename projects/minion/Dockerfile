@@ -18,6 +18,9 @@ ARG PACKAGES="gettext wget"
 # This can be unset if LOCAL_RPMS is set to "true"
 ARG OPENNMS_PACKAGES="opennms-minion-${VERSION}-1.noarch.rpm"
 
+ARG USER="root"
+ARG GROUP="root"
+
 COPY ./rpms /tmp/rpms
 
 SHELL ["/bin/bash", "-c"]
@@ -31,10 +34,10 @@ RUN yum -y install epel-release && \
     cd /tmp/rpms && yum -y localinstall *.rpm && cd - && \
     rm -rf /tmp/rpms && \
     yum clean all && \
-    chown minion:minion /opt/minion && \
-    sed -r -i '/RUNAS/s/.*/export RUNAS=minion/' /etc/sysconfig/minion
+    chown -R ${USER}:${GROUP} /opt/minion && \
+    sed -r -i '/RUNAS/s/.*/export RUNAS=${USER}/' /etc/sysconfig/minion
 
-USER minion
+USER ${USER}
 
 COPY ./entrypoint.sh /
 
@@ -55,16 +58,14 @@ CMD [ "-h" ]
 
 ### Runtime information and not relevant at build time
 
-ENV MINION_ID 00000000-0000-0000-0000-deadbeef0001
-ENV MINION_LOCATION MINION
-
-ENV OPENNMS_BROKER_URL tcp://127.0.0.1:61616
-ENV OPENNMS_HTTP_URL http://127.0.0.1:8980/opennms
-
-ENV OPENNMS_HTTP_USER minion
-ENV OPENNMS_HTTP_PASS minion
-ENV OPENNMS_BROKER_USER minion
-ENV OPENNMS_BROKER_PASS minion
+ENV MINION_ID="00000000-0000-0000-0000-deadbeef0001" \
+    MINION_LOCATION="MINION" \
+    OPENNMS_BROKER_URL="tcp://127.0.0.1:61616" \
+    OPENNMS_HTTP_URL="http://127.0.0.1:8980/opennms" \
+    OPENNMS_HTTP_USER="minion" \
+    OPENNMS_HTTP_PASS="minion" \
+    OPENNMS_BROKER_USER="minion" \
+    OPENNMS_BROKER_PASS="minion"
 
 ##------------------------------------------------------------------------------
 ## EXPOSED PORTS

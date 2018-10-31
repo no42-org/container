@@ -35,3 +35,7 @@ PACKAGES="wget
 
 # Packages
 OPENNMS_PACKAGES="opennms-sentinel-${VERSION}-1.noarch.rpm"
+
+# Run as user
+USER="sentinel"
+GROUP="sentinel"

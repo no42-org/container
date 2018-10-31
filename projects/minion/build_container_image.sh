@@ -16,6 +16,8 @@ docker build -t "${CONTAINER_PROJECT}" \
   --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")" \
   --build-arg OPENNMS_PACKAGES="${PACKAGES}" \
   --build-arg OPENNMS_PACKAGES="${OPENNMS_PACKAGES}" \
+  --build-arg USER="${USER}" \
+  --build-arg GROUP="${GROUP}" \
   .
 
 docker image save "${CONTAINER_PROJECT}:latest" -o "${CONTAINER_IMAGE}"

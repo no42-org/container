@@ -62,9 +62,9 @@ CMD [ "-h" ]
 
 ### Runtime information and not relevant at build time
 
-ENV OPENNMS_KARAF_SSH_HOST 0.0.0.0
-ENV OPENNMS_KARAF_SSH_PORT 8101
-ENV JAVA_OPTS ""
+ENV OPENNMS_KARAF_SSH_HOST="0.0.0.0" \
+    OPENNMS_KARAF_SSH_PORT="8101" \
+    JAVA_OPTS=""
 
 # Volumes for storing data outside of the container
 VOLUME [ "/opt/opennms/etc", "/opt/opennms-etc-overlay", "/opennms-data" ]

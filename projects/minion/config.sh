@@ -35,3 +35,7 @@ PACKAGES="wget
 
 # Packages
 OPENNMS_PACKAGES="opennms-minion-${VERSION}-1.noarch.rpm"
+
+# Run as user
+USER="minion"
+GROUP="minion"
