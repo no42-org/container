@@ -9,11 +9,8 @@ CENTOS_BASE_IMAGE="no42org/centos:${CENTOS_VERSION}"
 # Specific container config
 MAJOR_VERSION="1.8.0"
 VERSION="${MAJOR_VERSION}.191.b12"
-IMAGE_VERSION="{VERSION}"
-
-if [ ! -z ${CIRCLE_BUILD_NUM+x} ]; then
-  IMAGE_VERSION="${VERSION}-b${CIRCLE_BUILD_NUM}"
-fi
+BUILD_NUMBER="b1"
+IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
 
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"

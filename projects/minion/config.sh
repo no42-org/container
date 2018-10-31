@@ -13,11 +13,8 @@ JICMP6_RPM="https://yum.opennms.org/stable/rhel7/jicmp6/jicmp6-2.0.2-1.el7.cento
 MIRROR_HOST="yum.opennms.org"
 REPO_RELEASE="stable"
 VERSION="23.0.0"
-IMAGE_VERSION="{VERSION}"
-
-if [ ! -z ${CIRCLE_BUILD_NUM+x} ]; then
-  IMAGE_VERSION="${VERSION}-b${CIRCLE_BUILD_NUM}"
-fi
+BUILD_NUMBER="b1"
+IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
 
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"

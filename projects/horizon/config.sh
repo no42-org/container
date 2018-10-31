@@ -12,11 +12,8 @@ LOCAL_RPMS="false"
 REPO_HOST="yum.opennms.org"
 REPO_RELEASE="stable"
 VERSION="23.0.0"
-IMAGE_VERSION="{VERSION}"
-
-if [ ! -z ${CIRCLE_BUILD_NUM+x} ]; then
-  IMAGE_VERSION="${VERSION}-b${CIRCLE_BUILD_NUM}"
-fi
+BUILD_NUMBER="b1"
+IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
 
 REPO_RPM_URL="https://${REPO_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.noarch.rpm"
 REPO_KEY_URL="https://${REPO_HOST}/OPENNMS-GPG-KEY"
