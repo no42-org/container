@@ -10,6 +10,8 @@
 # Cause false/positives
 # shellcheck disable=SC2086
 
+SENTINEL_HOME=/opt/sentinel
+
 # Error codes
 E_ILLEGAL_ARGS=126
 
