@@ -1,12 +1,26 @@
-ARG JDK_BASE_IMAGE=opennms/openjdk:latest
+ARG JDK_BASE_IMAGE="opennms/openjdk:latest"
 
 FROM ${JDK_BASE_IMAGE}
 
+ARG BUILD_DATE="1970-01-01T00:00:00+0000"
+ARG LOCAL_RPMS="false"
+
+ARG VERSION="23.0.0"
 ARG REPO_RELEASE="stable"
-ARG VERSION="stable"
-ARG MIRROR_HOST="yum.opennms.org"
-ARG PACKAGES="opennms-minion"
-ARG BUILD_DATE="1970-01-01T00:00:00"
+ARG REPO_HOST="yum.opennms.org"
+
+ARG REPO_URL="https://${REPO_HOST}/${REPO_RELEASE}/common/opennms"
+ARG REPO_RPM_URL="https://${REPO_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.noarch.rpm"
+ARG REPO_KEY_URL="https://${REPO_HOST}/OPENNMS-GPG-KEY"
+
+ARG PACKAGES="gettext wget"
+
+# This can be unset if LOCAL_RPMS is set to "true"
+ARG OPENNMS_PACKAGES="opennms-minion-${VERSION}-1.noarch.rpm"
+
+COPY ./rpms /tmp/rpms
+
+SHELL ["/bin/bash", "-c"]
 
 # Install repositories, system and OpenNMS packages and do some cleanup
 RUN yum -y install epel-release && \
@@ -60,4 +74,3 @@ ENV OPENNMS_BROKER_PASS minion
 ## -- SNMP Trapd           162/UDP
 ## -- Syslog               514/UDP
 EXPOSE 8201 18980 162/udp 514/udp
-

@@ -26,23 +26,20 @@ CONTAINER_REGISTRY_REPO="no42org"
 CONTAINER_VERSION_TAGS=("${IMAGE_VERSION}"
                         "latest")
 
-# Container Image Artifact
+# Container image artifact
 CONTAINER_IMAGE="images/image.oci"
 
-# System Packages
+# System Package dependencies
 PACKAGES="wget
           gettext"
 
-# OpenNMS specific dependencies
+# OpenNMS Horizon dependencies
 PACKAGES="${PACKAGES}
           rrdtool
-          iplike
-          jicmp
-          jicmp6
           jrrd2
           R-core"
 
-# OpenNMS Horizon Packages
+# OpenNMS Horizon packages
 OPENNMS_PACKAGES="opennms-core-${VERSION}-1.noarch.rpm
                   opennms-webapp-jetty-${VERSION}-1.noarch.rpm
                   opennms-plugin-protocol-cifs-${VERSION}-1.noarch.rpm
