@@ -12,6 +12,7 @@
 
 MINION_HOME="/opt/minion"
 MINION_CONFIG="/opt/minion/etc/org.opennms.minion.controller.cfg"
+MINION_OVERLAY_ETC="/opt/minion-etc-overlay"
 
 # Error codes
 E_ILLEGAL_ARGS=126
@@ -142,6 +143,16 @@ initConfig() {
     fi
 }
 
+applyOverlayConfig() {
+  # Overlay etc specific config
+  if [ -d "${MINION_OVERLAY_ETC}" ] && [ -n "$(ls -A ${MINION_OVERLAY_ETC})" ]; then
+    echo "Apply custom etc configuration from ${MINION_OVERLAY_ETC}."
+    cp -r ${MINION_OVERLAY_ETC}/* ${MINION_HOME}/etc || exit ${E_INIT_CONFIG}
+  else
+    echo "No custom config found in ${MINION_OVERLAY_ETC}. Use default configuration."
+  fi
+}
+
 start() {
     cd ${MINION_HOME}/bin
     ./karaf server
@@ -159,6 +170,7 @@ while getopts csfh flag; do
         c)
             useEnvCredentials
             initConfig
+            applyOverlayConfig
             start
             ;;
         s)
@@ -166,6 +178,7 @@ while getopts csfh flag; do
             ;;
         f)
             initConfig
+            applyOverlayConfig
             start
             ;;
         h)
