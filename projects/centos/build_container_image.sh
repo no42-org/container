@@ -2,12 +2,12 @@
 
 set -x
 
-# shellcheck source=projects/horizon/config.sh
+# shellcheck source=projects/centos/config.sh
 source ./config.sh
 
 docker build -t "${CONTAINER_PROJECT}" \
-  --build-arg MAJOR_VERSION="${MAJOR_VERSION}" \
-  --build-arg VERSION="${VERSION}" \
+  --build-arg VERSION="${CENTOS_VERSION}" \
+  --build-arg CENTOS_BASE_IMAGE="${CENTOS_BASE_IMAGE}" \
   --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")" \
   .
 

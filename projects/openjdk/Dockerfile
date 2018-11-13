@@ -14,9 +14,9 @@ RUN yum -y install java-${MAJOR_VERSION}-openjdk-devel-${VERSION} && \
     yum -y clean all && \
     rm -rf /var/cache/yum
 
-LABEL license="AGPLv3" \
-      org.opennms.java.version="OpenJDK Java Development Kit ${VERSION}" \
-      org.centos.version="${VERSION}" \
-      org.centos.build.date="${BUILD_DATE}" \
-      vendor="OpenNMS Community" \
-      name="CentOS"
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>" \
+      license="AGPLv3" \
+      name="OpenJDK Development Kit" \
+      version="${VERSION}" \
+      build.date="${BUILD_DATE}" \
+      vendor="OpenNMS Community"

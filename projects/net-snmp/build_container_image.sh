@@ -2,12 +2,11 @@
 
 set -x
 
-# shellcheck source=projects/openjdk/config.sh
+# shellcheck source=projects/net-snmp/config.sh
 source ./config.sh
 
 docker build -t "${CONTAINER_PROJECT}" \
   --build-arg CENTOS_BASE_IMAGE="${CENTOS_BASE_IMAGE}" \
-  --build-arg MAJOR_VERSION="${MAJOR_VERSION}" \
   --build-arg VERSION="${VERSION}" \
   --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")" \
   .

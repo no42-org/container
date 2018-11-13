@@ -48,11 +48,11 @@ COPY ./entrypoint.sh /
 
 LABEL maintainer "Ronny Trommer <ronny@opennms.org>" \
       license="AGPLv3" \
-      org.opennms.repo.release="${REPO_RELEASE}" \
-      org.opennms.horizon.version="${VERSION}" \
-      org.opennms.build.date="${BUILD_DATE}" \
+      name="Horizon" \
+      version="${VERSION}" \
+      build.date="${BUILD_DATE}" \
       vendor="OpenNMS Community" \
-      name="Horizon"
+      org.opennms.repo.release="${REPO_RELEASE}"
 
 WORKDIR /opt/opennms
 

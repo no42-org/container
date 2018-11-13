@@ -44,12 +44,12 @@ VOLUME [ "/opt/sentinel/deploy", "/opt/sentinel/etc", "/opt/sentinel/data" ]
 
 LABEL maintainer "Ronny Trommer <ronny@opennms.org>" \
       license="AGPLv3" \
-      org.opennms.horizon.minion.version="${VERSION}" \
-      org.opennms.repo.release="${REPO_RELEASE}" \
-      org.opennms.repo.packages.installed="${PACKAGES}" \
-      org.opennms.build.date="${BUILD_DATE}" \
+      name="Sentinel" \
+      version="${VERSION}" \
+      build.date="${BUILD_DATE}" \
       vendor="OpenNMS Community" \
-      name="Sentinel"
+      org.opennms.repo.release="${REPO_RELEASE}" \
+      org.opennms.repo.packages.installed="${PACKAGES}"
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 

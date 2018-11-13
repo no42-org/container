@@ -45,12 +45,13 @@ VOLUME [ "/opt/minion/etc", "/opt/minion/etc/featuresBoot.d", "/opt/minion/data"
 
 LABEL maintainer "Ronny Trommer <ronny@opennms.org>" \
       license="AGPLv3" \
-      org.opennms.horizon.minion.version="${VERSION}" \
+      name="Minion" \
+      version="${VERSION}" \
+      build.date="${BUILD_DATE}" \
+      vendor="OpenNMS Community" \
       org.opennms.repo.release="${REPO_RELEASE}" \
       org.opennms.repo.packages.installed="${PACKAGES}" \
-      org.opennms.build.date="${BUILD_DATE}" \
-      vendor="OpenNMS Community" \
-      name="Minion"
+      org.opennms.container.build.date="${BUILD_DATE}"
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 

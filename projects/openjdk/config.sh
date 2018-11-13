@@ -16,7 +16,8 @@ IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
 CONTAINER_PROJECT="$(basename "$(pwd)")"
 CONTAINER_REGISTRY="docker.io"
 CONTAINER_REGISTRY_REPO="no42org"
-CONTAINER_VERSION_TAGS=("${IMAGE_VERSION}" "latest")
+CONTAINER_VERSION_TAGS=("${IMAGE_VERSION}"
+                        "latest")
 
 # Container Image Artifact
 CONTAINER_IMAGE="images/image.oci"
