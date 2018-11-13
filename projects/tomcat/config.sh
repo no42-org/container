@@ -3,10 +3,12 @@
 # shellcheck disable=SC2034
 
 # Base Image Dependency
-VERSION="7.5.1804"
-BASE_IMAGE="centos:${VERSION}"
+BASE_IMAGE="tomcat"
+BASE_IMAGE_VERSION="8.0"
+BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
-# Version information
+BUILD_NUMBER="b1"
+IMAGE_VERSION="${BASE_IMAGE_VERSION}-${BUILD_NUMBER}"
 
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"

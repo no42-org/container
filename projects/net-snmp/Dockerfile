@@ -1,9 +1,10 @@
-ARG CENTOS_BASE_IMAGE=centos:7
+ARG BASE_IMAGE="centos"
+ARG BASE_IMAGE_VERSION="latest"
 
-FROM ${CENTOS_BASE_IMAGE}
+FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-ARG VERSION="5.7.2"
-ARG BUILD_DATE="1970-01-01T00:00:00"
+ARG VERSION=${BASE_IMAGE_VERSION}
+ARG BUILD_DATE="1970-01-01T00:00:00+0000"
 
 RUN yum install -y net-snmp-${VERSION} net-snmp-utils-${VERSION} && \
     mkdir -p /etc/snmp/conf.d
@@ -11,7 +12,7 @@ RUN yum install -y net-snmp-${VERSION} net-snmp-utils-${VERSION} && \
 COPY config/snmpd.conf /etc/snmp/snmpd.conf
 COPY config/conf.d/* /etc/snmp/conf.d/
 
-LABEL maintainer "Ronny Trommer <ronny@opennms.org>" \
+LABEL maintainer="Ronny Trommer <ronny@opennms.org>" \
       license="AGPLv3" \
       name="Net-SNMP" \
       version="${VERSION}" \

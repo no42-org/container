@@ -2,11 +2,11 @@
 
 # shellcheck disable=SC2034
 
-# Dependencies
-CENTOS_VERSION="7.5.1804-b1"
-CENTOS_BASE_IMAGE="no42org/centos:${CENTOS_VERSION}"
+# Base Image Dependency
+BASE_IMAGE="no42org/centos"
+BASE_IMAGE_VERSION="7.5.1804-b1"
 
-# Configure base image dependency
+# Version information
 VERSION="5.7.2"
 BUILD_NUMBER="b1"
 IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"

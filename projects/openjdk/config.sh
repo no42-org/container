@@ -2,15 +2,16 @@
 
 # shellcheck disable=SC2034
 
-# Dependencies
-CENTOS_VERSION="7.5.1804-b1"
-CENTOS_BASE_IMAGE="no42org/centos:${CENTOS_VERSION}"
+# Base Image Dependency
+BASE_IMAGE="no42org/centos"
+BASE_IMAGE_VERSION="7.5.1804-b1"
+BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Specific container config
-MAJOR_VERSION="1.8.0"
-VERSION="${MAJOR_VERSION}.191.b12"
+JDK_MAJOR_VERSION="1.8.0"
+JDK_VERSION_DETAIL="${JDK_MAJOR_VERSION}.191.b12"
 BUILD_NUMBER="b1"
-IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
+IMAGE_VERSION="${JDK_VERSION_DETAIL}-${BUILD_NUMBER}"
 
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"

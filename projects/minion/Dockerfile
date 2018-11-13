@@ -1,11 +1,13 @@
-ARG JDK_BASE_IMAGE="opennms/openjdk:latest"
+ARG BASE_IMAGE="opennms/openjdk"
+ARG BASE_IMAGE_VERSION="latest"
 
-FROM ${JDK_BASE_IMAGE}
+FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
+ARG VERSION=${BASE_IMAGE_VERSION}
 ARG BUILD_DATE="1970-01-01T00:00:00+0000"
+
 ARG LOCAL_RPMS="false"
 
-ARG VERSION="23.0.0"
 ARG REPO_RELEASE="stable"
 ARG REPO_HOST="yum.opennms.org"
 
@@ -43,7 +45,7 @@ COPY ./entrypoint.sh /
 
 VOLUME [ "/opt/minion/etc", "/opt/minion/etc/featuresBoot.d", "/opt/minion/data" ]
 
-LABEL maintainer "Ronny Trommer <ronny@opennms.org>" \
+LABEL maintainer="Ronny Trommer <ronny@opennms.org>" \
       license="AGPLv3" \
       name="Minion" \
       version="${VERSION}" \

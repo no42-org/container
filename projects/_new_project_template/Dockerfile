@@ -1,11 +1,12 @@
-ARG VERSION="7.5.1804"
-ARG CENTOS_BASE_IMAGE=centos:"${VERSION}"
+ARG BASE_IMAGE=centos
+ARG BASE_IMAGE_VERSION="latest"
 
-FROM ${CENTOS_BASE_IMAGE}
+FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-ARG BUILD_DATE="1970-01-01T00:00:00"
+ARG VERSION=${BASE_IMAGE_VERSION}
+ARG BUILD_DATE="1970-01-01T00:00:00+0000"
 
-LABEL maintainer "Ronny Trommer <ronny@opennms.org>" \
+LABEL maintainer="Ronny Trommer <ronny@opennms.org>" \
       license="AGPLv3" \
       name="CentOS" \
       version="${VERSION}" \

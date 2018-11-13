@@ -41,13 +41,17 @@ jobs:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/centos
 
+  net-snmp:
+    <<: *common_environment
+    working_directory: ~/opennms-container/projects/net-snmp
+
   openjdk:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/openjdk
 
-  net-snmp:
+  tomcat:
     <<: *common_environment
-    working_directory: ~/opennms-container/projects/net-snmp
+    working_directory: ~/opennms-container/projects/tomcat
 
   horizon:
     <<: *common_environment
@@ -77,6 +81,10 @@ workflows:
           requires:
             - shellcheck
             - centos
+      - tomcat:
+          requires:
+            - shellcheck
+            - openjdk
       - horizon:
           requires:
             - shellcheck

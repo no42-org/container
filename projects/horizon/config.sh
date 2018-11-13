@@ -2,9 +2,9 @@
 
 # shellcheck disable=SC2034
 
-# Dependencies
-JDK_VERSION="1.8.0.191.b12-b1"
-JDK_BASE_IMAGE="no42org/openjdk:${JDK_VERSION}"
+# Base Image Dependency
+BASE_IMAGE="no42org/openjdk"
+BASE_IMAGE_VERSION="1.8.0.191.b12-b1"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Horizon RPM repository config and version
