@@ -5,7 +5,7 @@ set -x
 # shellcheck source=projects/sentinel/config.sh
 source ./config.sh
 
-docker build -t "${CONTAINER_PROJECT}" \
+docker build -t "${CONTAINER_PROJECT}:${IMAGE_VERSION}" \
   --build-arg BASE_IMAGE="${BASE_IMAGE}" \
   --build-arg BASE_IMAGE_VERSION="${BASE_IMAGE_VERSION}" \
   --build-arg LOCAL_RPMS="${LOCAL_RPMS}" \
@@ -21,4 +21,4 @@ docker build -t "${CONTAINER_PROJECT}" \
   --build-arg GROUP="${GROUP}" \
   .
 
-docker image save "${CONTAINER_PROJECT}:latest" -o "${CONTAINER_IMAGE}"
+docker image save "${CONTAINER_PROJECT}:${IMAGE_VERSION}" -o "${CONTAINER_IMAGE}"
