@@ -20,8 +20,8 @@ ARG PACKAGES="gettext wget"
 # This can be unset if LOCAL_RPMS is set to "true"
 ARG OPENNMS_PACKAGES="opennms-minion-${VERSION}-1.noarch.rpm"
 
-ARG USER="root"
-ARG GROUP="root"
+ARG USER="minion"
+ARG GROUP="minion"
 
 COPY ./rpms /tmp/rpms
 
