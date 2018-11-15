@@ -3,10 +3,11 @@
 # shellcheck disable=SC2034
 
 # Base Image Dependency
-VERSION="7.5.1804"
-BASE_IMAGE="centos:${VERSION}"
+BASE_IMAGE="centos"
+BASE_IMAGE_VERSION="7.5.1804"
 
 # Version information
+VERISON="${BASE_IMAGE}.${BASE_IMAGE_VERSION}"
 
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"
