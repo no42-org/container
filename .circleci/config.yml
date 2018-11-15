@@ -49,6 +49,10 @@ jobs:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/openjdk
 
+  oraclejdk:
+    <<: *common_environment
+    working_directory: ~/opennms-container/projects/oraclejdk
+
   tomcat:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/tomcat
@@ -78,6 +82,10 @@ workflows:
             - shellcheck
             - centos
       - openjdk:
+          requires:
+            - shellcheck
+            - centos
+      - oraclejdk:
           requires:
             - shellcheck
             - centos
