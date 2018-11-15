@@ -2,7 +2,7 @@
 
 set -x
 
-# shellcheck source=projects/horizon/config.sh
+# shellcheck source=projects/_new_project_template/config.sh
 source ./config.sh
 
 docker build -t "${CONTAINER_PROJECT}:${IMAGE_VERSION}" \
