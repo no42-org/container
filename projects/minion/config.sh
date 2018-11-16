@@ -3,16 +3,16 @@
 # shellcheck disable=SC2034
 
 # Base Image Dependency
-BASE_IMAGE="no42org/openjdk"
-BASE_IMAGE_VERSION="1.8.0.191.b12-b1"
+BASE_IMAGE="no42org/oraclejdk"
+BASE_IMAGE_VERSION="8u191-b12-b1"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Horizon RPM repository config and version
 LOCAL_RPMS="false"
 REPO_HOST="yum.opennms.org"
 REPO_RELEASE="stable"
-VERSION="23.0.0"
-BUILD_NUMBER="b2"
+VERSION="23.0.1"
+BUILD_NUMBER="b1"
 IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
 
 REPO_RPM_URL="https://${REPO_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.noarch.rpm"
