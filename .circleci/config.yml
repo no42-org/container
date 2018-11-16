@@ -97,14 +97,14 @@ workflows:
           requires:
             - shellcheck
             - centos
-            - openjdk
+            - oraclejdk
       - minion:
           requires:
             - shellcheck
             - centos
-            - openjdk
+            - oraclejdk
       - sentinel:
           requires:
             - shellcheck
             - centos
-            - openjdk
+            - oraclejdk
