@@ -53,6 +53,10 @@ jobs:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/oraclejdk
 
+  maven:
+    <<: *common_environment
+    working_directory: ~/opennms-container/projects/maven
+
   tomcat:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/tomcat
@@ -93,6 +97,10 @@ workflows:
           requires:
             - shellcheck
             - openjdk
+      - maven:
+          requires:
+            - shellcheck
+            - oraclejdk
       - horizon:
           requires:
             - shellcheck
