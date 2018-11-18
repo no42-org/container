@@ -14,6 +14,7 @@ RUN yum update -y && \
     curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" "${JDK_RPM_URL}" > jdk-linux-x64.rpm && \
     yum localinstall -y jdk-linux-x64.rpm && \
     rm -f jdk-linux-x64.rpm && \
+    yum -y clean all && \
     rm -rf /var/cache/yum
     
 LABEL maintainer="Ronny Trommer <ronny@opennms.org>" \
