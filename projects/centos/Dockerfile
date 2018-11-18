@@ -19,6 +19,6 @@ LABEL license="AGPLv3" \
       version="${VERSION}" \
       build.date="${BUILD_DATE}" \
       vendor="OpenNMS Community" \
-      org.opennms.container.image.os.name="${BASE_IMAGE}" \
+      org.opennms.container.image.os.name="CentOS" \
       org.opennms.container.image.os.version="${VERSION}" \
       org.opennms.container.image.os.build-date="${BUILD_DATE}"

@@ -87,7 +87,6 @@ workflows:
       - net-snmp:
           requires:
             - shellcheck
-            - centos
       - openjdk:
           requires:
             - shellcheck

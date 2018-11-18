@@ -4,7 +4,7 @@
 
 # Base Image Dependency
 BASE_IMAGE="no42org/oraclejdk"
-BASE_IMAGE_VERSION="8u191-b12-b1"
+BASE_IMAGE_VERSION="8u191-b12-b2"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Version information

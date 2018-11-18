@@ -5,7 +5,7 @@
 
 # Base Image Dependency
 BASE_IMAGE="no42org/centos"
-BASE_IMAGE_VERSION="7.5.1804-b1"
+BASE_IMAGE_VERSION="7.5.1804-b2"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Version information
@@ -14,7 +14,7 @@ JDK_BUILD_NUMBER="b12"
 JDK_RPM_URL="http://download.oracle.com/otn-pub/java/jdk/${JDK_VERSION}-${JDK_BUILD_NUMBER}/2787e4a523244c269598db4e85c51e0c/jdk-${JDK_VERSION}-linux-x64.rpm"
 
 VERSION="${JDK_VERSION}-${JDK_BUILD_NUMBER}"
-BUILD_NUMBER="b1"
+BUILD_NUMBER="b2"
 IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
 
 # Container registry and tags
