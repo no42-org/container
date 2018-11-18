@@ -6,9 +6,11 @@ FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 ARG VERSION="3.6.0"
 ARG BUILD_DATE="1970-01-01T00:00:00+0000"
 
-ARG MAVEN_URL="https://mirror.netcologne.de/apache.org/"
+ARG MAVEN_URL="https://mirror.netcologne.de/apache.org"
 ARG MAVEN_PKG="${MAVEN_URL}/maven/maven-3/${VERSION}/binaries/apache-maven-${VERSION}-bin.tar.gz"
 ARG MAVEN_HOME="/opt/apache-maven-${VERSION}"
+
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${MAVEN_HOME}/bin
 
 WORKDIR /opt
 

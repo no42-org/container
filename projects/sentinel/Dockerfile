@@ -60,7 +60,8 @@ CMD [ "-h" ]
 ### Runtime information and not relevant at build time
 
 # TODO MVR SENTINEL_LOCATION is not used at the moment
-ENV SENTINEL_ID="" \
+ENV SENTINEL_HOME="/opt/sentinel" \
+    SENTINEL_ID="" \
     SENTINEL_LOCATION="SENTINEL" \
     OPENNMS_BROKER_URL="tcp://127.0.0.1:61616" \
     OPENNMS_HTTP_URL="http://127.0.0.1:8980/opennms" \

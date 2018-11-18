@@ -64,7 +64,8 @@ CMD [ "-h" ]
 
 ### Runtime information and not relevant at build time
 
-ENV OPENNMS_KARAF_SSH_HOST="0.0.0.0" \
+ENV OPENNMS_HOME="/opt/opennms" \
+    OPENNMS_KARAF_SSH_HOST="0.0.0.0" \
     OPENNMS_KARAF_SSH_PORT="8101" \
     JAVA_OPTS=""
 

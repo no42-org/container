@@ -12,8 +12,8 @@ VERSION="3.6.0"
 BUILD_NUMBER="b1"
 IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
 
-MAVEN_URL="https://mirror.netcologne.de/apache.org/"
-MAVEN_PKG="${MAVEN_URL}/maven/maven-3/${VERSION}/binaries/apache-maven-${VERSION}-bin.tar.gz"
+MAVEN_URL="https://www-eu.apache.org"
+MAVEN_PKG="${MAVEN_URL}/dist/maven/maven-3/${VERSION}/binaries/apache-maven-${VERSION}-bin.tar.gz"
 MAVEN_HOME="/opt/apache-maven-${VERSION}"
 
 # Container registry and tags

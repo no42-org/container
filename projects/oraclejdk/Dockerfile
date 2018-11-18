@@ -8,6 +8,8 @@ ARG BUILD_DATE="1970-01-01T00:00:00+0000"
 
 ARG JDK_RPM_URL
 
+ENV JAVA_HOME="/usr/java/default"
+
 RUN yum update -y && \
     curl -v -j -k -L -H "Cookie: oraclelicense=accept-securebackup-cookie" "${JDK_RPM_URL}" > jdk-linux-x64.rpm && \
     yum localinstall -y jdk-linux-x64.rpm && \
