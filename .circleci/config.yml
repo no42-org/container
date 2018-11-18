@@ -78,6 +78,9 @@ workflows:
   container_build_:
     jobs:
       - shellcheck
+      - tomcat:
+          requires:
+            - shellcheck
       - centos:
           requires:
             - shellcheck
@@ -93,10 +96,6 @@ workflows:
           requires:
             - shellcheck
             - centos
-      - tomcat:
-          requires:
-            - shellcheck
-            - openjdk
       - maven:
           requires:
             - shellcheck

@@ -3,8 +3,8 @@
 # shellcheck disable=SC2034
 
 # Base Image Dependency
-BASE_IMAGE="no42org/openjdk"
-BASE_IMAGE_VERSION="1.8.0.191.b12-b1"
+BASE_IMAGE="no42org/oraclejdk"
+BASE_IMAGE_VERSION="8u191-b12-b1"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Horizon RPM repository config and version
