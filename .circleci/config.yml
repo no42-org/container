@@ -41,6 +41,10 @@ jobs:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/centos
 
+  shairport-sync:
+    <<: *common_environment
+    working_directory: ~/opennms-container/projects/shairport-sync
+
   net-snmp:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/net-snmp
@@ -78,6 +82,9 @@ workflows:
   container_build_:
     jobs:
       - shellcheck
+      - shairport-sync:
+          requires:
+            - shellcheck
       - tomcat:
           requires:
             - shellcheck
