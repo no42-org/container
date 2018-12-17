@@ -13,6 +13,7 @@
 MINION_HOME="/opt/minion"
 MINION_CONFIG="/opt/minion/etc/org.opennms.minion.controller.cfg"
 MINION_OVERLAY_ETC="/opt/minion-etc-overlay"
+MINION_SECRETS="/opt/minion-secrets"
 
 # Error codes
 E_ILLEGAL_ARGS=126
@@ -153,6 +154,16 @@ applyOverlayConfig() {
   fi
 }
 
+addSecrets() {
+  # Add secrets keystore
+  if [ -d "${MINION_SECRETS}" ] && [ -n "$(ls -A ${MINION_SECRETS})" ]; then
+    echo "Apply secrets from ${MINION_SECRETS}."
+    cp -Lr ${MINION_SECRETS}/* ${MINION_HOME}/etc || exit ${E_INIT_CONFIG}
+  else
+    echo "No secrets in ${MINION_SECRETS}."
+  fi
+}
+
 start() {
     cd ${MINION_HOME}/bin
     ./karaf server
@@ -171,6 +182,7 @@ while getopts csfh flag; do
             useEnvCredentials
             initConfig
             applyOverlayConfig
+            addSecrets
             start
             ;;
         s)
@@ -179,6 +191,7 @@ while getopts csfh flag; do
         f)
             initConfig
             applyOverlayConfig
+            addSecrets
             start
             ;;
         h)
