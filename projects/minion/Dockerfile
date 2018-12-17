@@ -41,6 +41,7 @@ RUN yum -y install epel-release && \
 
 USER ${USER}
 
+COPY ./health.sh /
 COPY ./entrypoint.sh /
 
 VOLUME [ "/opt/minion/etc", "/opt/minion/etc/featuresBoot.d", "/opt/minion/data" ]
