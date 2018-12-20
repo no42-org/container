@@ -36,6 +36,9 @@ jobs:
           command: |
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources -e SC2129,SC2001,SC2013
+  polr:
+    <<: *common_environment
+    working_directory: ~/opennms-container/projects/polr
 
   centos:
     <<: *common_environment
@@ -82,6 +85,9 @@ workflows:
   container_build_:
     jobs:
       - shellcheck
+      - polr:
+          requires:
+            - shellcheck
       - shairport-sync:
           requires:
             - shellcheck
