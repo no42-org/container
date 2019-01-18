@@ -10,8 +10,8 @@ BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 # Horizon RPM repository config and version
 LOCAL_RPMS="false"
 REPO_HOST="yum.opennms.org"
-REPO_RELEASE="stable"
-VERSION="23.0.0"
+REPO_RELEASE="develop"
+VERSION="24.0.0"
 BUILD_NUMBER="b1"
 IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
 

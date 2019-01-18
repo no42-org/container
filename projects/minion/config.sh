@@ -11,7 +11,7 @@ BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 LOCAL_RPMS="false"
 REPO_HOST="yum.opennms.org"
 REPO_RELEASE="stable"
-VERSION="23.0.1"
+VERSION="23.0.2"
 BUILD_NUMBER="b1"
 IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"
 
