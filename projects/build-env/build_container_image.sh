@@ -14,7 +14,7 @@ docker build -t "${CONTAINER_PROJECT}:${IMAGE_VERSION}" \
   --build-arg REPO_RELEASE="develop" \
   --build-arg REPO_HOST="${REPO_HOST}" \
   --build-arg REPO_KEY_URL="${REPO_KEY_URL}" \
-  --build-arg REMOTE_RPMS="${REMOTE_RPMS}" \
+  --build-arg REPO_RPM="${REPO_RPM}" \
   .
 
 docker image save "${CONTAINER_PROJECT}:${IMAGE_VERSION}" -o "${CONTAINER_IMAGE}"

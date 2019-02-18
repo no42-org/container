@@ -56,10 +56,6 @@ jobs:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/openjdk
 
-  oraclejdk:
-    <<: *common_environment
-    working_directory: ~/opennms-container/projects/oraclejdk
-
   maven:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/maven
@@ -104,10 +100,6 @@ workflows:
           requires:
             - shellcheck
             - centos
-      - oraclejdk:
-          requires:
-            - shellcheck
-            - centos
       - maven:
           requires:
             - shellcheck
@@ -121,9 +113,9 @@ workflows:
           requires:
             - shellcheck
             - centos
-            - oraclejdk
+            - openjdk
       - sentinel:
           requires:
             - shellcheck
             - centos
-            - oraclejdk
+            - openjdk
