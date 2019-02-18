@@ -6,10 +6,10 @@ aliases:
   - &docker_environment
     - image: docker:18.06.0-ce-git
   - &checkout
-    path: ~/opennms-container
+    path: ~/my-container
   - &build_container
     name: Building Container Image
-    command: ~/opennms-container/.circleci/build.sh
+    command: ~/my-container/.circleci/build.sh
   - &registry_login
     name: Login Container Registry
     command: docker login -u ${CONTAINER_REGISTRY_LOGIN} -p ${CONTAINER_REGISTRY_PASS}
@@ -39,27 +39,30 @@ jobs:
 
   centos:
     <<: *common_environment
-    working_directory: ~/opennms-container/projects/centos
+    working_directory: ~/my-container/projects/centos
 
+  fedora:
+    <<: *common_environment
+    working_directory: ~/my-container/projects/fedora
   shairport-sync:
     <<: *common_environment
-    working_directory: ~/opennms-container/projects/shairport-sync
+    working_directory: ~/my-container/projects/shairport-sync
 
   openjdk:
     <<: *common_environment
-    working_directory: ~/opennms-container/projects/openjdk
+    working_directory: ~/my-container/projects/openjdk
 
   horizon:
     <<: *common_environment
-    working_directory: ~/opennms-container/projects/horizon
+    working_directory: ~/my-container/projects/horizon
 
   minion:
     <<: *common_environment
-    working_directory: ~/opennms-container/projects/minion
+    working_directory: ~/my-container/projects/minion
 
   sentinel:
     <<: *common_environment
-    working_directory: ~/opennms-container/projects/sentinel
+    working_directory: ~/my-container/projects/sentinel
 
 workflows:
   version: 2
@@ -67,6 +70,9 @@ workflows:
     jobs:
       - shellcheck
       - shairport-sync:
+          requires:
+            - shellcheck
+      - fedora:
           requires:
             - shellcheck
       - centos:
