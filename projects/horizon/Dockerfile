@@ -42,12 +42,12 @@ RUN yum -y install epel-release && \
 COPY ./assets/*.tpl /root/
 COPY ./entrypoint.sh /
 
-LABEL maintainer="The OpenNMS Group" \
+LABEL maintainer="ronny@no42.org" \
       license="AGPLv3" \
       name="Horizon" \
       version="${VERSION}" \
       build.date="${BUILD_DATE}" \
-      vendor="OpenNMS Community" \
+      vendor="no42.org" \
       org.opennms.repo.release="${REPO_RELEASE}"
 
 WORKDIR /opt/opennms

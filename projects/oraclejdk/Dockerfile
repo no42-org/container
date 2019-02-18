@@ -17,12 +17,12 @@ RUN yum update -y && \
     yum -y clean all && \
     rm -rf /var/cache/yum
     
-LABEL maintainer="The OpenNMS Group" \
+LABEL maintainer="ronny@no42.org" \
       license="AGPLv3" \
       name="Oracle JDK" \
       version="${VERSION}" \
       build.date="${BUILD_DATE}" \
-      vendor="OpenNMS Community" \
+      vendor="no42.org" \
       org.opennms.container.image.java.name="Oracle Java" \
       org.opennms.container.image.java.version="${VERSION}" \
       org.opennms.container.image.java.build-date="${BUILD_DATE}"

@@ -37,12 +37,12 @@ COPY ./entrypoint.sh /
 
 VOLUME [ "/opt/minion/etc", "/opt/minion/etc/featuresBoot.d", "/opt/minion/data" ]
 
-LABEL maintainer="The OpenNMS Group" \
+LABEL maintainer="ronny@no42.org" \
       license="AGPLv3" \
       name="Minion" \
       version="${VERSION}" \
       build.date="${BUILD_DATE}" \
-      vendor="OpenNMS Community" \
+      vendor="no42.org" \
       org.opennms.repo.release="${REPO_RELEASE}"
 
 ENTRYPOINT [ "/entrypoint.sh" ]

@@ -12,12 +12,12 @@ RUN yum-config-manager --enable cr && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-LABEL maintainer="The OpenNMS Group" \
+LABEL maintainer="ronny@no42.org" \
       license="AGPLv3" \
       name="CentOS" \
       version="${VERSION}" \
       build.date="${BUILD_DATE}" \
-      vendor="OpenNMS Community" \
+      vendor="no42.org" \
       org.opennms.container.image.os.name="CentOS" \
       org.opennms.container.image.os.version="${VERSION}" \
       org.opennms.container.image.os.build-date="${BUILD_DATE}"

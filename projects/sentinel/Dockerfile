@@ -36,12 +36,12 @@ COPY ./entrypoint.sh /
 
 VOLUME [ "/opt/sentinel/deploy", "/opt/sentinel/etc", "/opt/sentinel/data" ]
 
-LABEL maintainer="The OpenNMS Group" \
+LABEL maintainer="ronny@no42.org" \
       license="AGPLv3" \
       name="Sentinel" \
       version="${VERSION}" \
       build.date="${BUILD_DATE}" \
-      vendor="OpenNMS Community" \
+      vendor="no42.org" \
       org.opennms.repo.release="${REPO_RELEASE}"
 
 ENTRYPOINT [ "/entrypoint.sh" ]

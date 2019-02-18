@@ -7,7 +7,6 @@ BASE_IMAGE="alpine"
 BASE_IMAGE_VERSION="edge"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
-# Horizon RPM repository config and version
 VERSION="3.2d22"
 BUILD_NUMBER="b1"
 IMAGE_VERSION="${VERSION}-${BUILD_NUMBER}"

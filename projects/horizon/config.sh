@@ -4,7 +4,7 @@
 
 # Base Image Dependency
 BASE_IMAGE="opennms/openjdk"
-BASE_IMAGE_VERSION="1.8.0.191.b12-b1"
+BASE_IMAGE_VERSION="1.8.0.191.b12-b3"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Horizon RPM repository config and version
@@ -47,4 +47,4 @@ CONTAINER_VERSION_TAGS=("${IMAGE_VERSION}"
                         "${VERSION}")
 
 # Container image artifact
-CONTAINER_IMAGE="images/horizon.oci"
+CONTAINER_IMAGE="images/image.oci"

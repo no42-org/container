@@ -41,4 +41,4 @@ CONTAINER_VERSION_TAGS=("${IMAGE_VERSION}"
                         "${VERSION}")
 
 # Container image artifact
-CONTAINER_IMAGE="images/sentinel.oci"
+CONTAINER_IMAGE="images/image.oci"
