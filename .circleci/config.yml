@@ -36,9 +36,6 @@ jobs:
           command: |
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources -e SC2129,SC2001,SC2013
-  polr:
-    <<: *common_environment
-    working_directory: ~/opennms-container/projects/polr
 
   centos:
     <<: *common_environment
@@ -48,21 +45,9 @@ jobs:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/shairport-sync
 
-  net-snmp:
-    <<: *common_environment
-    working_directory: ~/opennms-container/projects/net-snmp
-
   openjdk:
     <<: *common_environment
     working_directory: ~/opennms-container/projects/openjdk
-
-  maven:
-    <<: *common_environment
-    working_directory: ~/opennms-container/projects/maven
-
-  tomcat:
-    <<: *common_environment
-    working_directory: ~/opennms-container/projects/tomcat
 
   horizon:
     <<: *common_environment
@@ -81,34 +66,21 @@ workflows:
   container_build_:
     jobs:
       - shellcheck
-      - polr:
-          requires:
-            - shellcheck
       - shairport-sync:
           requires:
             - shellcheck
-      - tomcat:
-          requires:
-            - shellcheck
       - centos:
-          requires:
-            - shellcheck
-      - net-snmp:
           requires:
             - shellcheck
       - openjdk:
           requires:
             - shellcheck
             - centos
-      - maven:
-          requires:
-            - shellcheck
-            - oraclejdk
       - horizon:
           requires:
             - shellcheck
             - centos
-            - oraclejdk
+            - openjdk
       - minion:
           requires:
             - shellcheck
