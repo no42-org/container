@@ -26,8 +26,8 @@ PACKAGES="wget
 # By default the build system will build the RPMS in the ./rpms directory and install from here.
 #
 # Suggested packages to instlal OpenNMS Minion packages from repository
-# PACKAGES="${PACKAGES}
-#           opennms-minion
+PACKAGES="${PACKAGES}
+          opennms-minion"
 
 # Run as user
 USER="minion"

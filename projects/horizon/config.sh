@@ -33,11 +33,11 @@ PACKAGES="${PACKAGES}
 #
 # Suggested packages to instlal OpenNMS Horizon packages from repository
 #
-# PACKAGES="${PACKAGES}
-#           opennms-core
-#           opennms-webapp-jetty
-#           opennms-plugin-protocol-cifs
-#           opennms-webapp-hawtio"
+PACKAGES="${PACKAGES}
+          opennms-core
+          opennms-webapp-jetty
+          opennms-plugin-protocol-cifs
+          opennms-webapp-hawtio"
 
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"
