@@ -16,7 +16,7 @@ WORKDIR /opt
 
 RUN curl ${MAVEN_PKG} | tar xz
 
-LABEL maintainer="Ronny Trommer <ronny@opennms.org>" \
+LABEL maintainer="The OpenNMS Group" \
       license="Apache License, Version 2.0" \
       name="Apache Maven" \
       version="${VERSION}" \

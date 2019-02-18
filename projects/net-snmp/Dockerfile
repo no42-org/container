@@ -12,7 +12,7 @@ RUN apk --no-cache add net-snmp>${VERSION} && \
 COPY config/snmpd.conf /etc/snmp/snmpd.conf
 COPY config/conf.d/* /etc/snmp/conf.d/
 
-LABEL maintainer="Ronny Trommer <ronny@opennms.org>" \
+LABEL maintainer="The OpenNMS Group" \
       license="AGPLv3" \
       name="Net-SNMP" \
       version="${VERSION}" \

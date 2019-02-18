@@ -3,8 +3,8 @@
 # shellcheck disable=SC2034
 
 # Base Image Dependency
-BASE_IMAGE="no42org/oraclejdk"
-BASE_IMAGE_VERSION="8u191-b12-b2"
+BASE_IMAGE="opennms/openjdk"
+BASE_IMAGE_VERSION="1.8.0.191.b12-b1"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Version information
@@ -19,9 +19,8 @@ MAVEN_HOME="/opt/apache-maven-${VERSION}"
 # Container registry and tags
 CONTAINER_PROJECT="$(basename "$(pwd)")"
 CONTAINER_REGISTRY="docker.io"
-CONTAINER_REGISTRY_REPO="no42org"
+CONTAINER_REGISTRY_REPO="opennms"
 CONTAINER_VERSION_TAGS=("${IMAGE_VERSION}"
-                        "${VERSION}"
                         "latest")
 
 # Container Image Artifact

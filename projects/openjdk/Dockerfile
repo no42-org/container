@@ -14,7 +14,7 @@ RUN yum -y install java-${JDK_MAJOR_VERSION}-openjdk-devel-${JDK_VERSION_DETAIL}
     yum -y clean all && \
     rm -rf /var/cache/yum
 
-LABEL maintainer="Ronny Trommer <ronny@opennms.org>" \
+LABEL maintainer="The OpenNMS Group" \
       license="AGPLv3" \
       name="OpenJDK Development Kit" \
       version="${JDK_VERSION_DETAIL}" \

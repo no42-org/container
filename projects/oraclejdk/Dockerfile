@@ -17,7 +17,7 @@ RUN yum update -y && \
     yum -y clean all && \
     rm -rf /var/cache/yum
     
-LABEL maintainer="Ronny Trommer <ronny@opennms.org>" \
+LABEL maintainer="The OpenNMS Group" \
       license="AGPLv3" \
       name="Oracle JDK" \
       version="${VERSION}" \

@@ -96,7 +96,7 @@ initNewtsConfig() {
 
 applyOverlayConfig() {
   # Overlay relative to the root of the install dir
-  if [ -d ${OPENNMS_OVERLAY} ] && [ -n "$(ls -A ${OPENNMS_OVERLAY})" ]; then
+  if [ -d "${OPENNMS_OVERLAY}" ] && [ -n "$(ls -A ${OPENNMS_OVERLAY})" ]; then
     echo "Apply custom configuration from ${OPENNMS_OVERLAY}."
     cp -r ${OPENNMS_OVERLAY}/* ${OPENNMS_HOME}/ || exit ${E_INIT_CONFIG}
   else
@@ -104,7 +104,7 @@ applyOverlayConfig() {
   fi
 
   # Overlay etc specific config
-  if [ -d ${OPENNMS_OVERLAY_ETC} ] && [ -n "$(ls -A ${OPENNMS_OVERLAY_ETC})" ]; then
+  if [ -d "${OPENNMS_OVERLAY_ETC}" ] && [ -n "$(ls -A ${OPENNMS_OVERLAY_ETC})" ]; then
     echo "Apply custom etc configuration from ${OPENNMS_OVERLAY_ETC}."
     cp -r ${OPENNMS_OVERLAY_ETC}/* ${OPENNMS_HOME}/etc || exit ${E_INIT_CONFIG}
   else
@@ -112,7 +112,7 @@ applyOverlayConfig() {
   fi
 
   # Overlay jetty specific config
-  if [ -d ${OPENNMS_OVERLAY_JETTY_WEBINF} ] && [ -n "$(ls -A ${OPENNMS_OVERLAY_JETTY_WEBINF})" ]; then
+  if [ -d "${OPENNMS_OVERLAY_JETTY_WEBINF}" ] && [ -n "$(ls -A ${OPENNMS_OVERLAY_JETTY_WEBINF})" ]; then
     echo "Apply custom Jetty WEB-INF configuration from ${OPENNMS_OVERLAY_JETTY_WEBINF}."
     cp -r ${OPENNMS_OVERLAY_JETTY_WEBINF}/* ${OPENNMS_HOME}/jetty-webapps/opennms/WEB-INF || exit ${E_INIT_CONFIG}
   else

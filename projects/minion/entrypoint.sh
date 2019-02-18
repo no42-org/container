@@ -13,7 +13,6 @@
 MINION_HOME="/opt/minion"
 MINION_CONFIG="/opt/minion/etc/org.opennms.minion.controller.cfg"
 MINION_OVERLAY_ETC="/opt/minion-etc-overlay"
-MINION_SECRETS="/opt/minion-secrets"
 
 # Error codes
 E_ILLEGAL_ARGS=126
@@ -148,19 +147,9 @@ applyOverlayConfig() {
   # Overlay etc specific config
   if [ -d "${MINION_OVERLAY_ETC}" ] && [ -n "$(ls -A ${MINION_OVERLAY_ETC})" ]; then
     echo "Apply custom etc configuration from ${MINION_OVERLAY_ETC}."
-    cp -Lr ${MINION_OVERLAY_ETC}/* ${MINION_HOME}/etc || exit ${E_INIT_CONFIG}
+    cp -r ${MINION_OVERLAY_ETC}/* ${MINION_HOME}/etc || exit ${E_INIT_CONFIG}
   else
     echo "No custom config found in ${MINION_OVERLAY_ETC}. Use default configuration."
-  fi
-}
-
-addSecrets() {
-  # Add secrets keystore
-  if [ -d "${MINION_SECRETS}" ] && [ -n "$(ls -A ${MINION_SECRETS})" ]; then
-    echo "Apply secrets from ${MINION_SECRETS}."
-    cp -Lr ${MINION_SECRETS}/* ${MINION_HOME}/etc || exit ${E_INIT_CONFIG}
-  else
-    echo "No secrets in ${MINION_SECRETS}."
   fi
 }
 
@@ -182,7 +171,6 @@ while getopts csfh flag; do
             useEnvCredentials
             initConfig
             applyOverlayConfig
-            addSecrets
             start
             ;;
         s)
@@ -191,7 +179,6 @@ while getopts csfh flag; do
         f)
             initConfig
             applyOverlayConfig
-            addSecrets
             start
             ;;
         h)
