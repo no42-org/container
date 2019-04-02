@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
-# shellcheck source=horizon/config.sh
+# shellcheck source=projects/horizon/config.sh
 source ./config.sh
 
-# shellcheck source=registry-config.sh
+# shellcheck source=projects/registry-config.sh
 source ../registry-config.sh
 
 docker build -t "${CONTAINER_PROJECT}:${IMAGE_VERSION[0]}" \
