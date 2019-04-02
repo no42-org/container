@@ -5,7 +5,7 @@ set -x
 # shellcheck source=projects/sentinel/config.sh
 source ./config.sh
 
-docker build -t "${CONTAINER_PROJECT}:${IMAGE_VERSION}" \
+docker build -t "${CONTAINER_PROJECT}:${IMAGE_VERSION[0]}" \
   --build-arg BASE_IMAGE="${BASE_IMAGE}" \
   --build-arg BASE_IMAGE_VERSION="${BASE_IMAGE_VERSION}" \
   --build-arg VERSION="${VERSION}" \
@@ -14,4 +14,4 @@ docker build -t "${CONTAINER_PROJECT}:${IMAGE_VERSION}" \
   --build-arg SHAIRPORT_GIT_REF="${SHAIRPORT_GIT_REF}" \
   .
 
-docker image save "${CONTAINER_PROJECT}:${IMAGE_VERSION}" -o "${CONTAINER_IMAGE}"
+docker image save "${CONTAINER_PROJECT}:${IMAGE_VERSION[0]}" -o "${CONTAINER_IMAGE}"

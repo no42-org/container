@@ -3,7 +3,7 @@
 # shellcheck source=horizon/config.sh
 source ./config.sh
 
-# shellcheck source=registry-conf.sh
+# shellcheck source=registry-config.sh
 source ../registry-config.sh
 
 docker build -t "${CONTAINER_PROJECT}:${IMAGE_VERSION[0]}" \
