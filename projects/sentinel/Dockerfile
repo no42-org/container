@@ -15,6 +15,8 @@ ARG REPO_RPM="https://${REPO_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.
 
 ARG PACKAGES="wget gettext"
 
+ARG SENTINEL_PACKAGES="opennms-sentinel"
+
 COPY ./rpms /tmp/rpms
 
 SHELL ["/bin/bash", "-c"]
@@ -23,7 +25,8 @@ SHELL ["/bin/bash", "-c"]
 RUN yum -y install epel-release && \
     rpm --import "${REPO_KEY_URL}" && \
     yum -y install ${REPO_RPM} && \
-    if [ "$(ls -1 /tmp/rpms/*.rpm 2>/dev/null | wc -l)" != 0 ]; then cd /tmp/rpms && yum -y localinstall *.rpm; fi && \
+    yum -y install ${PACKAGES} && \
+    if [ "$(ls -1 /tmp/rpms/*.rpm 2>/dev/null | wc -l)" != 0 ]; then yum -y localinstall /tmp/rpms/*.rpm; else yum -y install ${SENTINEL_PACKAGES}; fi && \
     rm -rf /tmp/rpms && \
     yum -y install ${PACKAGES} && \
     yum clean all && \
@@ -32,19 +35,21 @@ RUN yum -y install epel-release && \
 
 USER ${USER}
 
-COPY ./entrypoint.sh /
+COPY ./assets/entrypoint.sh /
 
 VOLUME [ "/opt/sentinel/deploy", "/opt/sentinel/etc", "/opt/sentinel/data" ]
 
-LABEL maintainer="ronny@no42.org" \
+LABEL maintainer="The OpenNMS Group" \
       license="AGPLv3" \
       name="Sentinel" \
       version="${VERSION}" \
       build.date="${BUILD_DATE}" \
-      vendor="no42.org" \
+      vendor="OpenNMS Community" \
       org.opennms.repo.release="${REPO_RELEASE}"
 
 ENTRYPOINT [ "/entrypoint.sh" ]
+
+STOPSIGNAL SIGTERM
 
 CMD [ "-h" ]
 
@@ -71,5 +76,5 @@ ENV SENTINEL_HOME="/opt/sentinel" \
 ##------------------------------------------------------------------------------
 ## -- Sentinel Karaf Debug 5005/TCP
 ## -- Sentinel KARAF SSH   8301/TCP
-EXPOSE 5005
+
 EXPOSE 8301

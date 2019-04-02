@@ -15,6 +15,8 @@ ARG REPO_RPM="https://${REPO_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.
 
 ARG PACKAGES="wget gettext"
 
+ARG ONMS_PACKAGES="opennms-core opennms-webapp-jetty opennms-webapp-hawtio"
+
 COPY ./rpms /tmp/rpms
 
 SHELL ["/bin/bash", "-c"]
@@ -23,9 +25,9 @@ SHELL ["/bin/bash", "-c"]
 RUN yum -y install epel-release && \
     rpm --import "${REPO_KEY_URL}" && \
     yum -y install ${REPO_RPM} && \
-    if [ "$(ls -1 /tmp/rpms/*.rpm 2>/dev/null | wc -l)" != 0 ]; then cd /tmp/rpms && yum -y localinstall *.rpm; fi && \
-    rm -rf /tmp/rpms && \
     yum -y install ${PACKAGES} && \
+    if [ "$(ls -1 /tmp/rpms/*.rpm 2>/dev/null | wc -l)" != 0 ]; then yum -y localinstall /tmp/rpms/*.rpm; else yum -y install ${ONMS_PACKAGES}; fi && \
+    rm -rf /tmp/rpms && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     rm -rf /opt/opennms/logs \
@@ -40,19 +42,21 @@ RUN yum -y install epel-release && \
 
 # Add templates replaced at runtime and entrypoint
 COPY ./assets/*.tpl /root/
-COPY ./entrypoint.sh /
+COPY ./assets/entrypoint.sh /
 
-LABEL maintainer="ronny@no42.org" \
+LABEL maintainer="The OpenNMS Group" \
       license="AGPLv3" \
       name="Horizon" \
       version="${VERSION}" \
       build.date="${BUILD_DATE}" \
-      vendor="no42.org" \
+      vendor="OpenNMS Community" \
       org.opennms.repo.release="${REPO_RELEASE}"
 
 WORKDIR /opt/opennms
 
 ENTRYPOINT [ "/entrypoint.sh" ]
+
+STOPSIGNAL SIGTERM
 
 CMD [ "-h" ]
 
@@ -76,4 +80,4 @@ VOLUME [ "/opt/opennms/etc", "/opt/opennms-etc-overlay", "/opennms-data" ]
 ## -- OpenNMS Eventd      5817/TCP
 ## -- SNMP Trapd           162/UDP
 ## -- Syslog Receiver      514/UDP
-EXPOSE 8980 18980 1099 8101 61616 5817 162/udp 514/udp
+EXPOSE 8980 8101 61616 162/udp 514/udp

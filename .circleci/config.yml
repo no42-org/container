@@ -44,6 +44,7 @@ jobs:
   fedora:
     <<: *common_environment
     working_directory: ~/my-container/projects/fedora
+
   shairport-sync:
     <<: *common_environment
     working_directory: ~/my-container/projects/shairport-sync
