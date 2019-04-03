@@ -23,14 +23,3 @@ fi
 
 SHAIRPORT_SYNC_URL=https://github.com/mikebrady/shairport-sync.git
 SHAIRPORT_GIT_REF=master
-
-# Container registry and tags
-CONTAINER_PROJECT="$(basename "$(pwd)")"
-CONTAINER_REGISTRY="docker.io"
-CONTAINER_REGISTRY_REPO="no42org"
-CONTAINER_VERSION_TAGS=("${IMAGE_VERSION}"
-                        "${VERSION}"
-                        "latest")
-
-# Container image artifact
-CONTAINER_IMAGE="images/image.oci"
