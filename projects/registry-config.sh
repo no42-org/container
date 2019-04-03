@@ -3,7 +3,7 @@
 # shellcheck disable=SC2034
 
 # Fallback set container project to working directory
-if [ -z "${CONTAINER_PROJECT}" ]; then
+if [ -n "${CONTAINER_PROJECT}" ]; then
   CONTAINER_PROJECT="$(basename "$(pwd)")"
 fi
 
