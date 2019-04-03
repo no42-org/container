@@ -2,8 +2,6 @@
 
 # shellcheck disable=SC2034
 
-set -x
-
 # Configure base image dependency
 BASE_IMAGE="centos"
 BASE_IMAGE_VERSION="7.6.1810"
