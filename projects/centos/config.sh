@@ -8,7 +8,7 @@ set -x
 BASE_IMAGE="centos"
 BASE_IMAGE_VERSION="7.6.1810"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
-BUILD_NUMBER="b5"
+BUILD_NUMBER="b6"
 
 # Floating tags
 IMAGE_VERSION=("${BASE_IMAGE_VERSION}-${BUILD_NUMBER}"

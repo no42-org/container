@@ -4,14 +4,14 @@
 
 # Base Image Dependency
 BASE_IMAGE="no42org/openjdk"
-BASE_IMAGE_VERSION="1.8.0.201.b09-b3"
+BASE_IMAGE_VERSION="1.8.0.201.b09-b2"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Horizon RPM repository config and version
 VERSION="24.0.0-rc"
 
 # Allow a manual build number which allows to overwrite an existing image
-BUILD_NUMBER="b1"
+BUILD_NUMBER="b2"
 
 # Floating tags
 IMAGE_VERSION=("${VERSION}-${BUILD_NUMBER}"
