@@ -3,13 +3,13 @@
 # shellcheck disable=SC2034
 
 # Base Image Dependency
-BASE_IMAGE="opennms/openjdk"
-BASE_IMAGE_VERSION="1.8.0.201.b09-b1"
+BASE_IMAGE="no42org/openjdk"
+BASE_IMAGE_VERSION="1.8.0.201.b09-b3"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Horizon RPM repository config and version
 VERSION="24.0.0-rc"
-BUILD_NUMBER="b1"
+BUILD_NUMBER="b2"
 IMAGE_VERSION=("${VERSION}-${BUILD_NUMBER}"
                "${VERSION}") 
 
