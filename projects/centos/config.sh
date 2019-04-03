@@ -9,10 +9,11 @@ BASE_IMAGE="centos"
 BASE_IMAGE_VERSION="7.6.1810"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 BUILD_NUMBER="b6"
+VERSION="7.6.1810"
 
 # Floating tags
-IMAGE_VERSION=("${BASE_IMAGE_VERSION}-${BUILD_NUMBER}"
-               "${BASE_IMAGE_VERSION}")
+IMAGE_VERSION=("${VERSION}-${BUILD_NUMBER}"
+               "${VERSION}")
 
 # Most specific tag when it is not build locally and in CircleCI
 if [ -n "${CIRCLE_BUILD_NUM}" ]; then
