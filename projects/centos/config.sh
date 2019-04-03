@@ -6,7 +6,7 @@
 BASE_IMAGE="centos"
 BASE_IMAGE_VERSION="7.6.1810"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
-BUILD_NUMBER="b6"
+BUILD_NUMBER="b5"
 VERSION="7.6.1810"
 
 # Floating tags
