@@ -13,7 +13,7 @@ RUN yum-config-manager --enable cr && \
     yum -y --setopt=tsflags=nodocs update && \
     yum clean all && \
     rm -rf /var/cache/yum && \
-    curl -L ${CONFD_URL} -O /usr/bin/confd && \
+    curl -L ${CONFD_URL} -o /usr/bin/confd && \
     chmod +x /usr/bin/confd
 
 LABEL maintainer="ronny@no42.org" \
