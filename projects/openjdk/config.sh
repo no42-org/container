@@ -3,8 +3,8 @@
 # shellcheck disable=SC2034
 
 # Base Image Dependency
-BASE_IMAGE="no42org/centos"
-BASE_IMAGE_VERSION="7.6.1810-b5"
+BASE_IMAGE="no42org/confd"
+BASE_IMAGE_VERSION="0.16.0-b1.655"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Specific container config
@@ -12,7 +12,7 @@ JDK_MAJOR_VERSION="1.8.0"
 JDK_VERSION_DETAIL="${JDK_MAJOR_VERSION}.201.b09"
 
 # Allow a manual build number which allows to overwrite an existing image
-BUILD_NUMBER="b3"
+BUILD_NUMBER="b4"
 
 # Floating tags
 IMAGE_VERSION=("${JDK_VERSION_DETAIL}-${BUILD_NUMBER}"
