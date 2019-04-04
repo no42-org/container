@@ -10,16 +10,12 @@ BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 # Horizon RPM repository config and version
 VERSION="24.0.0-rc"
 
-# Allow a manual build number which allows to overwrite an existing image
-BUILD_NUMBER="b3"
-
 # Floating tags
-IMAGE_VERSION=("${VERSION}-${BUILD_NUMBER}"
-               "${VERSION}")
+IMAGE_VERSION=("${VERSION}")
 
 # Most specific tag when it is not build locally and in CircleCI
 if [ -n "${CIRCLE_BUILD_NUM}" ]; then
-  IMAGE_VERSION+=("${VERSION}-${BUILD_NUMBER}.${CIRCLE_BUILD_NUM}")
+  IMAGE_VERSION+=("${VERSION}-b${CIRCLE_BUILD_NUM}")
 fi
 
 REPO_HOST="yum.opennms.org"
