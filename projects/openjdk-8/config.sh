@@ -6,8 +6,8 @@
 CONTAINER_PROJECT="openjdk"
 
 # Base Image Dependency
-BASE_IMAGE="opennms/confd"
-BASE_IMAGE_VERSION="0.16.0-b1.655"
+BASE_IMAGE="no42org/confd"
+BASE_IMAGE_VERSION="0.16.0"
 BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%S%z")"
 
 # Specific container config

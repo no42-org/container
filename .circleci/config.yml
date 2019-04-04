@@ -41,6 +41,10 @@ jobs:
     <<: *common_environment
     working_directory: ~/my-container/projects/centos
 
+  confd:
+    <<: *common_environment
+    working_directory: ~/my-container/projects/confd
+
   fedora:
     <<: *common_environment
     working_directory: ~/my-container/projects/fedora
@@ -49,9 +53,13 @@ jobs:
     <<: *common_environment
     working_directory: ~/my-container/projects/shairport-sync
 
-  openjdk:
+  openjdk-8:
     <<: *common_environment
-    working_directory: ~/my-container/projects/openjdk
+    working_directory: ~/my-container/projects/openjdk-8
+
+  openjdk-11:
+    <<: *common_environment
+    working_directory: ~/my-container/projects/openjdk-11
 
   horizon:
     <<: *common_environment
@@ -79,22 +87,30 @@ workflows:
       - centos:
           requires:
             - shellcheck
-      - openjdk:
+      - confd:
           requires:
             - shellcheck
             - centos
+      - openjdk-8:
+          requires:
+            - shellcheck
+            - confd
+      - openjdk-11:
+          requires:
+            - shellcheck
+            - confd
       - horizon:
           requires:
             - shellcheck
             - centos
-            - openjdk
+            - openjdk-8
       - minion:
           requires:
             - shellcheck
             - centos
-            - openjdk
+            - openjdk-8
       - sentinel:
           requires:
             - shellcheck
             - centos
-            - openjdk
+            - openjdk-8
