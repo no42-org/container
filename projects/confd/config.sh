@@ -4,7 +4,7 @@
 
 # Configure base image dependency
 BASE_IMAGE="no42org/centos"
-BASE_IMAGE_VERSION="7.6.1810"
+BASE_IMAGE_VERSION="7.6.1810-cb.759"
 MAJOR_VERSION="0"
 VERSION="${MAJOR_VERSION}.16.0"
 CONFD_URL="https://github.com/kelseyhightower/confd/releases/download/v${VERSION}/confd-${VERSION}-linux-amd64"
