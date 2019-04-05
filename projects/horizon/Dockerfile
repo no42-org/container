@@ -1,5 +1,5 @@
 ARG BASE_IMAGE="opennms/openjdk"
-ARG BASE_IMAGE_VERSION="latest"
+ARG BASE_IMAGE_VERSION="11"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
@@ -64,7 +64,7 @@ CMD [ "-h" ]
 
 ENV OPENNMS_KARAF_SSH_HOST="0.0.0.0" \
     OPENNMS_KARAF_SSH_PORT="8101" \
-    JAVA_OPTS=""
+    JAVA_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=512m"
 
 # Volumes for storing data outside of the container
 VOLUME [ "/opt/opennms/etc", "/opt/opennms-etc-overlay", "/opennms-data" ]
