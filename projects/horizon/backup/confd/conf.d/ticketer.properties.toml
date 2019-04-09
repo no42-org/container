@@ -1,0 +1,11 @@
+[template]
+src = "ticketer.properties.tpl"
+dest = "/tmp/ticketer.properties"
+keys = [
+    "/ticketer/servicelayer",
+    "/ticketer/plugin",
+    "/alarmtroubleticketlinktemplate",
+    "/alarmtroubleticketenabled",
+    "/ticketer/skipcreatewhencleared",
+    "/ticketer/skipclosewhenmotcleared"
+]

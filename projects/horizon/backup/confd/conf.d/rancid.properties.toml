@@ -1,0 +1,8 @@
+[template]
+src = "rancid.properties.tpl"
+dest = "/tmp/rancid.properties"
+keys = [
+    "/asterisk/agi/listenaddress",
+    "/asterisk/agi/listenport",
+    "/asterisk/agi/maxpoolsize"
+]

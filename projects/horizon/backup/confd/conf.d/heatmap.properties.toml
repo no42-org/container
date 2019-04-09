@@ -1,0 +1,11 @@
+[template]
+src = "heatmap.properties.tpl"
+dest = "/tmp/heatmap.properties"
+keys = [
+    "/heatmap/defaultmode",
+    "/heatmap/defaultheatmap",
+    "/heatmap/categoryfilter",
+    "/heatmap/foreignsourcefilter",
+    "/heatmap/servicefilter",
+    "/heatmap/onlyunacknowledged"
+]

@@ -1,0 +1,12 @@
+[template]
+src = "activemq.properties.tpl"
+dest = "/tmp/activemq.properties"
+keys = [
+    "/jms/timeout",
+    "/activemq/broker/disable",
+    "/activemq/broker/url",
+    "/activemq/broker/username",
+    "/activemq/broker/password",
+    "/activemq/client/max-connections",
+    "/activemq/client/concurrent-consumers"
+]

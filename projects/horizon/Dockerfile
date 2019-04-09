@@ -6,15 +6,10 @@ FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 ARG VERSION=${BASE_IMAGE_VERSION}
 ARG BUILD_DATE="1970-01-01T00:00:00+0000"
 
-ARG REPO_RELEASE="stable"
-ARG REPO_HOST="yum.opennms.org"
-
 ARG REPO_KEY_URL="https://${REPO_HOST}/OPENNMS-GPG-KEY"
-
 ARG REPO_RPM="https://${REPO_HOST}/repofiles/opennms-repo-${REPO_RELEASE}-rhel7.noarch.rpm"
 
 ARG PACKAGES="wget gettext"
-
 ARG ONMS_PACKAGES="opennms-core opennms-webapp-jetty opennms-webapp-hawtio"
 
 COPY ./rpms /tmp/rpms
@@ -32,7 +27,7 @@ RUN yum -y install epel-release && \
     rm -rf /var/cache/yum
 
 # Add templates replaced at runtime and entrypoint
-COPY ./assets/*.tpl /root/
+COPY ./confd /etc
 COPY ./assets/entrypoint.sh /
 
 LABEL maintainer="The OpenNMS Group" \
@@ -53,9 +48,8 @@ CMD [ "-h" ]
 
 ### Runtime information and not relevant at build time
 
-ENV OPENNMS_KARAF_SSH_HOST="0.0.0.0" \
-    OPENNMS_KARAF_SSH_PORT="8101" \
-    JAVA_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=512m"
+ENV JAVA_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=512m"
+ENV CONFD_BACKEND="env"
 
 # Volumes for data which need to be persistent
 VOLUME [ "/opt/opennms-overlay", "/opt/opennms/etc", "/opt/opennms/share/rrd", "/opt/opennms/share/reports", "/opt/opennms/share/mibs" ]

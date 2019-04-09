@@ -1,0 +1,8 @@
+[template]
+src = "icmp.properties.tpl"
+dest = "/tmp/icmp.properties"
+keys = [
+    "/icmp/pingerclass",
+    "/icmp/requirev4",
+    "/icmp/requirev6"
+]

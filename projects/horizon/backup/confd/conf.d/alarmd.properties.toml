@@ -1,0 +1,7 @@
+[template]
+src = "alarmd.properties.tpl"
+dest = "/tmp/alarmd.properties"
+keys = [
+    "/alarmd/newifclearedalarmexists",
+    "/alarmd/legacyalarmstate"
+]

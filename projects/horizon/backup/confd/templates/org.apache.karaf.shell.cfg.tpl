@@ -1,4 +1,6 @@
-
+#
+# DO NOT CHANGE THIS FILE! GENERATED FROM confd
+#
 sshPort=${OPENNMS_KARAF_SSH_PORT}
 # OPENNMS: Restrict SSH to localhost only
 sshHost=${OPENNMS_KARAF_SSH_HOST}

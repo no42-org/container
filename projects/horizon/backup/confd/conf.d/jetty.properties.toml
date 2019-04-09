@@ -1,0 +1,18 @@
+[template]
+src = "jetty.properties.tpl"
+dest = "/tmp/jetty.properties"
+keys = [
+    "/jetty/port",
+    "/jetty/ajp-port",
+    "/jetty/host",
+    "/jetty/enablerequestlogging",
+    "/jetty/server/request/maxformcontentsize",
+    "/jetty/requestheadersize",
+    "/jetty/server/request/maxformkeys",
+    "/jetty/https-port",
+    "/jetty/https-host",
+    "/jetty/https-keystore",
+    "/jetty/https-keystorepassword",
+    "/jetty/https-keypassword",
+    "/opennms/web/base-url"
+]

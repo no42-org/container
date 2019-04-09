@@ -1,0 +1,9 @@
+[template]
+src = "reporting.properties.tpl"
+dest = "/tmp/reporting.properties"
+keys = [
+    "/report/template/dir",
+    "/report/dir",
+    "/report/logo",
+    "/ksc/default/graphsperline"
+]

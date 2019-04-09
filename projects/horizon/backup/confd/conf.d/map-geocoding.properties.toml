@@ -1,0 +1,25 @@
+[template]
+src = "map-geocoding.properties.tpl"
+dest = "/tmp/map-geocoding.properties"
+keys = [
+    "/ui/datetimeformat",
+    "/ui/show_stacktrace",
+    "/ui/topology-entity-cache-duration",
+    "/assets/allowhtmlfields",
+    "/web/aclsenabled",
+    "/eventlist/acknowledge",
+    "/eventlist/showcount",
+    "/nodeswithoutages/count",
+    "/nodeswithoutages/show",
+    "/situations/count",
+    "/situations/show",
+    "/nodeswithproblems/count",
+    "/nodeswithproblems/show",
+    "/nodestatusbar/show",
+    "/security/disableloginsuccessevent",
+    "/interfaceavailabilitybox/maxinterfacecount",
+    "/web/console/centerurl",
+    "/dashboard/redirect",
+    "/web/graphs/engine",
+    "/web/defaultgraphperiod"
+]

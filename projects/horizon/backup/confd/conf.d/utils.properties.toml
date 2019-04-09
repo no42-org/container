@@ -1,0 +1,7 @@
+[template]
+src = "utils.properties.tpl"
+dest = "/tmp/utils.properties"
+keys = [
+    "/utils/propertiescache/enablecheckfilemodified",
+    "/utils/propertiescache/cachetimeout"
+]

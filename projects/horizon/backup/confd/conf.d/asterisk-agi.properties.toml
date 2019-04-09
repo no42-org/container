@@ -1,0 +1,7 @@
+[template]
+src = "asterisk-agi.properties.tpl"
+dest = "/tmp/asterisk-agi.properties"
+keys = [
+    "/alarmd/newifclearedalarmexists",
+    "/alarmd/legacyalarmstate"
+]
