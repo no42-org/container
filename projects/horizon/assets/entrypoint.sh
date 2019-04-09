@@ -15,11 +15,6 @@ OPENNMS_HOME=/opt/opennms
 OPENNMS_DATASOURCES_TPL=/root/opennms-datasources.xml.tpl
 OPENNMS_DATASOURCES_CFG=${OPENNMS_HOME}/etc/opennms-datasources.xml
 OPENNMS_OVERLAY=/opt/opennms-overlay
-OPENNMS_OVERLAY_ETC=/opt/opennms-etc-overlay
-OPENNMS_OVERLAY_JETTY_WEBINF=/opt/opennms-jetty-webinf-overlay
-
-OPENNMS_UPGRADE_GUARD=${OPENNMS_HOME}/etc/do-upgrade
-OPENNMS_CONFIGURED_GUARD=${OPENNMS_HOME}/etc/configured
 
 OPENNMS_KARAF_TPL=/root/org.apache.karaf.shell.cfg.tpl
 OPENNMS_KARAF_CFG=${OPENNMS_HOME}/etc/org.apache.karaf.shell.cfg
@@ -30,6 +25,7 @@ OPENNMS_NEWTS_PROPERTIES=${OPENNMS_HOME}/etc/opennms.properties.d/newts.properti
 # Error codes
 E_ILLEGAL_ARGS=126
 E_INIT_CONFIG=127
+E_INIT_OPENNMS=128
 
 # Help function used in error messages and -h option
 usage() {
@@ -37,32 +33,16 @@ usage() {
   echo "Docker entry script for OpenNMS service container"
   echo ""
   echo "Overlay Config file:"
-  echo "If you want to overwrite the default configuration with your custom config, you can use an overlay config"
-  echo "folder in which needs to be mounted to ${OPENNMS_OVERLAY_ETC}."
-  echo "Every file in this folder is overwriting the default configuration file in ${OPENNMS_HOME}/etc."
+  echo "If you want to overwrite the default configuration with your custom config, you can use an overlay"
+  echo "folder in which needs to be mounted to ${OPENNMS_OVERLAY}."
+  echo "Every file in this folder is overwriting files in ${OPENNMS_HOME}."
   echo ""
   echo "-f: Start OpenNMS in foreground with an existing configuration."
   echo "-h: Show this help."
-  echo "-i: Initialize Java environment, database and pristine OpenNMS configuration files and do *NOT* start OpenNMS."
-  echo "    The database and config file initialization is skipped when a configured file exist."
-  echo "-s: Initialize environment like -i and start OpenNMS in foreground."
-  echo "-n: Initialize newts (cassandra) as well the initialisations steps in -i above."
-  echo "    Initialization is skipped when a configured file exist."
-  echo "-c: Initialize environment like -n and start OpenNMS in foreground using newts (cassandra)."
-  echo "-t:  options: Run the config-tester, default is -h to show usage."
+  echo "-i: Initialize or update the database and OpenNMS configuration files. OpenNMS will be *NOT* started"
+  echo "-n: Initialize or update the database with Newts (Cassandra) and OpenNMS configuration files. OpenNMS will be *NOT* started"
+  echo "-t: options: Run the config-tester, default is -h to show usage."
   echo ""
-}
-
-doInitOrUpgrade() {
-  if [ -f ${OPENNMS_UPGRADE_GUARD} ]; then
-    echo "Enforce config and database update."
-    rm -rf ${OPENNMS_CONFIGURED_GUARD}
-    ${OPENNMS_HOME}/bin/runjava -s
-    ${OPENNMS_HOME}/bin/install -dis
-    rm -rf ${OPENNMS_UPGRADE_GUARD}
-    rm -rf ${OPENNMS_OVERLAY_ETC}/do-upgrade
-    rm -rf ${OPENNMS_OVERLAY}/etc/do-upgrade
-  fi
 }
 
 # Initialize database and configure Karaf
@@ -94,6 +74,11 @@ initNewtsConfig() {
   ${OPENNMS_HOME}/bin/newts init || exit ${E_INIT_CONFIG}
 }
 
+initOnms() {
+  echo "Initialize database schema and libraries."
+  ${OPENNMS_HOME}/bin/install -dis || exit ${E_INIT_OPENNMS}
+}
+
 applyOverlayConfig() {
   # Overlay relative to the root of the install dir
   if [ -d "${OPENNMS_OVERLAY}" ] && [ -n "$(ls -A ${OPENNMS_OVERLAY})" ]; then
@@ -101,22 +86,6 @@ applyOverlayConfig() {
     cp -r ${OPENNMS_OVERLAY}/* ${OPENNMS_HOME}/ || exit ${E_INIT_CONFIG}
   else
     echo "No custom config found in ${OPENNMS_OVERLAY}. Use default configuration."
-  fi
-
-  # Overlay etc specific config
-  if [ -d "${OPENNMS_OVERLAY_ETC}" ] && [ -n "$(ls -A ${OPENNMS_OVERLAY_ETC})" ]; then
-    echo "Apply custom etc configuration from ${OPENNMS_OVERLAY_ETC}."
-    cp -r ${OPENNMS_OVERLAY_ETC}/* ${OPENNMS_HOME}/etc || exit ${E_INIT_CONFIG}
-  else
-    echo "No custom config found in ${OPENNMS_OVERLAY_ETC}. Use default configuration."
-  fi
-
-  # Overlay jetty specific config
-  if [ -d "${OPENNMS_OVERLAY_JETTY_WEBINF}" ] && [ -n "$(ls -A ${OPENNMS_OVERLAY_JETTY_WEBINF})" ]; then
-    echo "Apply custom Jetty WEB-INF configuration from ${OPENNMS_OVERLAY_JETTY_WEBINF}."
-    cp -r ${OPENNMS_OVERLAY_JETTY_WEBINF}/* ${OPENNMS_HOME}/jetty-webapps/opennms/WEB-INF || exit ${E_INIT_CONFIG}
-  else
-    echo "No custom Jetty WEB-INF config found in ${OPENNMS_OVERLAY_JETTY_WEBINF}. Use default configuration."
   fi
 }
 
@@ -166,7 +135,7 @@ if [[ "${#}" == 0 ]]; then
 fi
 
 # Evaluate arguments for build script.
-while getopts "fhisnct" flag; do
+while getopts "fhint" flag; do
   case ${flag} in
     f)
       applyOverlayConfig
@@ -184,16 +153,7 @@ while getopts "fhisnct" flag; do
       applyOverlayConfig
       applyKarafDebugLogging
       testConfig -t -a
-      doInitOrUpgrade
-      exit
-      ;;
-    s)
-      initConfig
-      applyOverlayConfig
-      applyKarafDebugLogging
-      testConfig -t -a
-      doInitOrUpgrade
-      start
+      initOnms
       exit
       ;;
     n)
@@ -203,18 +163,7 @@ while getopts "fhisnct" flag; do
       applyOverlayConfig
       applyKarafDebugLogging
       testConfig -t -a
-      doInitOrUpgrade
-      exit
-      ;;
-    c)
-      echo "starting opennms with newts cassandra"
-      initConfig
-      initNewtsConfig
-      applyOverlayConfig
-      applyKarafDebugLogging
-      testConfig -t -a
-      doInitOrUpgrade
-      start
+      initOnms
       exit
       ;;
     t)

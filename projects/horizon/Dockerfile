@@ -1,4 +1,4 @@
-ARG BASE_IMAGE="opennms/openjdk"
+ARG BASE_IMAGE="no42org/openjdk"
 ARG BASE_IMAGE_VERSION="11"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
@@ -29,16 +29,7 @@ RUN yum -y install epel-release && \
     if [ "$(ls -1 /tmp/rpms/*.rpm 2>/dev/null | wc -l)" != 0 ]; then yum -y localinstall /tmp/rpms/*.rpm; else yum -y install ${ONMS_PACKAGES}; fi && \
     rm -rf /tmp/rpms && \
     yum clean all && \
-    rm -rf /var/cache/yum && \
-    rm -rf /opt/opennms/logs \
-           /var/opennms/rrd \
-           /var/opennms/reports && \
-    mkdir -p /opennms-data/logs \
-             /opennms-data/rrd \
-             /opennms-data/reports && \
-    ln -s /opennms-data/logs /opt/opennms/logs && \
-    ln -s /opennms-data/rrd /var/opennms/rrd && \
-    ln -s /opennms-data/reports /var/opennms/reports
+    rm -rf /var/cache/yum
 
 # Add templates replaced at runtime and entrypoint
 COPY ./assets/*.tpl /root/
@@ -66,8 +57,8 @@ ENV OPENNMS_KARAF_SSH_HOST="0.0.0.0" \
     OPENNMS_KARAF_SSH_PORT="8101" \
     JAVA_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=512m"
 
-# Volumes for storing data outside of the container
-VOLUME [ "/opt/opennms/etc", "/opt/opennms-etc-overlay", "/opennms-data" ]
+# Volumes for data which need to be persistent
+VOLUME [ "/opt/opennms-overlay", "/opt/opennms/etc", "/opt/opennms/share/rrd", "/opt/opennms/share/reports", "/opt/opennms/share/mibs" ]
 
 ##------------------------------------------------------------------------------
 ## EXPOSED PORTS
@@ -78,6 +69,6 @@ VOLUME [ "/opt/opennms/etc", "/opt/opennms-etc-overlay", "/opennms-data" ]
 ## -- OpenNMS KARAF SSH   8101/TCP
 ## -- OpenNMS MQ         61616/TCP
 ## -- OpenNMS Eventd      5817/TCP
-## -- SNMP Trapd           162/UDP
-## -- Syslog Receiver      514/UDP
-EXPOSE 8980 8101 61616 162/udp 514/udp
+## -- SNMP Trapd          1162/UDP
+## -- Syslog Receiver     1514/UDP
+EXPOSE 8980 8101 61616 1162/udp 1514/udp
