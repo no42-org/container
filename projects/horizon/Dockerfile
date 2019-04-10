@@ -27,7 +27,7 @@ RUN yum -y install epel-release && \
     rm -rf /var/cache/yum
 
 # Add templates replaced at runtime and entrypoint
-COPY ./confd /etc
+COPY ./confd /etc/confd
 COPY ./assets/entrypoint.sh /
 
 LABEL maintainer="The OpenNMS Group" \
@@ -40,7 +40,7 @@ LABEL maintainer="The OpenNMS Group" \
 
 WORKDIR /opt/opennms
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+# ENTRYPOINT [ "/entrypoint.sh" ]
 
 STOPSIGNAL SIGTERM
 
