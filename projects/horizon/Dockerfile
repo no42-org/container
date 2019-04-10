@@ -48,7 +48,8 @@ CMD [ "-h" ]
 
 ### Runtime information and not relevant at build time
 
-ENV JAVA_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=512m"
+ENV JAVA_MEM_OPTS="-Xmx1024m -XX:MaxMetaspaceSize=512m"
+ENV JAVA_OPTS ""
 ENV CONFD_BACKEND="env"
 
 # Volumes for data which need to be persistent

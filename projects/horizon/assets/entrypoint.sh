@@ -78,10 +78,7 @@ start() {
   -Dgroovy.use.classvalue=true
   -Djava.io.tmpdir=/opt/opennms/data/tmp
   -XX:+StartAttachListener"
-  if [ -z "${JAVA_OPTS}" ]; then
-      JAVA_OPTS="-Xmx1G -XX:MaxMetaspaceSize=512m"
-  fi
-  exec /usr/lib/jvm/java-11/bin/java ${OPENNMS_JAVA_OPTS} ${JAVA_OPTS} -jar /opt/opennms/lib/opennms_bootstrap.jar start
+  exec /usr/lib/jvm/java-11/bin/java ${OPENNMS_JAVA_OPTS} ${JAVA_MEM_OPTS} ${JAVA_OPTS} -jar /opt/opennms/lib/opennms_bootstrap.jar start
 }
 
 testConfig() {
