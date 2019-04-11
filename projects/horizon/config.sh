@@ -46,8 +46,5 @@ ONMS_PACKAGES="opennms-core
                opennms-webapp-hawtio
                opennms-webapp-remoting
                opennms-plugin-protocol-cifs
-               opennms-plugin-protocol-radius
-               opennms-plugin-provisioning-dns
-               opennms-plugin-provisioning-reverse-dns
-               opennms-plugin-provisioning-snmp-asset
-               opennms-plugin-provisioning-snmp-hardware-inventory"
+               opennms-plugin-protocol-radius"
+

@@ -10,8 +10,9 @@
 # Cause false/positives
 # shellcheck disable=SC2086
 
-OPENNMS_HOME=/opt/opennms
-OPENNMS_OVERLAY=/opt/opennms-overlay
+OPENNMS_HOME="/opt/opennms"
+OPENNMS_OVERLAY="/opt/opennms-overlay"
+JAVA_HOME="/usr/lib/jvm/java-11"
 
 # Error codes
 E_ILLEGAL_ARGS=126
@@ -34,6 +35,14 @@ usage() {
   echo ""
 }
 
+install() {
+  ${JAVA_HOME}/bin/java -Dopennms.home="${OPENNMS_HOME}" -Dlog4j.configurationFile="${OPENNMS_HOME}"/etc/log4j2-tools.xml -cp "${OPENNMS_HOME}/lib/opennms_bootstrap.jar" org.opennms.bootstrap.InstallerBootstrap "${@}" || exit ${E_INIT_CONFIG}
+}
+
+configTester() {
+  ${JAVA_HOME}/bin/java -Dopennms.manager.class="org.opennms.netmgt.config.tester.ConfigTester" -Dopennms.home="${OPENNMS_HOME}" -Dlog4j.configurationFile="$OPENNMS_HOME"/etc/log4j2-tools.xml -jar $OPENNMS_HOME/lib/opennms_bootstrap.jar "${@}" || exit ${E_INIT_CONFIG}
+}
+
 processConfdTemplates() {
   echo "Processing confd templates from ..."
   confd -onetime -backend "${CONFD_BACKEND}"
@@ -52,7 +61,7 @@ initOrUpgrade() {
   fi
   processConfdTemplates
   echo "Initialize database and Karaf configuration and do install or upgrade the database schema."
-  ${OPENNMS_HOME}/bin/install -dis || exit ${E_INIT_CONFIG}
+  install "-dis"
 }
 
 applyOverlayConfig() {
@@ -78,15 +87,15 @@ start() {
   -Dgroovy.use.classvalue=true
   -Djava.io.tmpdir=/opt/opennms/data/tmp
   -XX:+StartAttachListener"
-  exec /usr/lib/jvm/java-11/bin/java ${OPENNMS_JAVA_OPTS} ${JAVA_MEM_OPTS} ${JAVA_OPTS} -jar /opt/opennms/lib/opennms_bootstrap.jar start
+  exec ${JAVA_HOME}/bin/java ${OPENNMS_JAVA_OPTS} ${JAVA_MEM_OPTS} ${JAVA_OPTS} -jar /opt/opennms/lib/opennms_bootstrap.jar start
 }
 
 testConfig() {
   shift
   if [ "${#}" == "0" ]; then
-    ${OPENNMS_HOME}/bin/config-tester -h
+    configTester -h
   else
-    ${OPENNMS_HOME}/bin/config-tester "${@}" || exit ${E_INIT_CONFIG}
+    configTester "${@}"
   fi
 }
 
