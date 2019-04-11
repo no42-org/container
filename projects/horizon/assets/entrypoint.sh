@@ -48,6 +48,7 @@ configTester() {
 }
 
 processConfdTemplates() {
+  deprecation
   echo "Processing confd templates using the backend ${CONFD_BACKEND}."
   confd -onetime -backend "${CONFD_BACKEND}"
 }
@@ -92,7 +93,6 @@ start() {
 }
 
 testConfig() {
-  deprecation
   shift
   if [ "${#}" == "0" ]; then
     configTester -h
