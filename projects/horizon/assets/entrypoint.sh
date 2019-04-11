@@ -17,6 +17,7 @@ JAVA_HOME="/usr/lib/jvm/java-11"
 # Error codes
 E_ILLEGAL_ARGS=126
 E_INIT_CONFIG=127
+E_DEPRECATED_CONFIG=128
 
 # Help function used in error messages and -h option
 usage() {
@@ -91,6 +92,16 @@ start() {
 }
 
 testConfig() {
+  deprecation
+  shift
+  if [ "${#}" == "0" ]; then
+    configTester -h
+  else
+    configTester "${@}"
+  fi
+}
+
+deprecation() {
   if [ -n "${OPENNMS_DBNAME}" ]; then
     echo "WARNING: The OPENNMS_DBNAME is deprecated use OPENNMS_DATABASE_NAME instead."
     export OPENNMS_DATABASE_NAME=${OPENNMS_DBNAME}
@@ -106,11 +117,51 @@ testConfig() {
     export OPENNMS_DATABASE_PASSWORD=${OPENNMS_DBPASS}
   fi
 
-  shift
-  if [ "${#}" == "0" ]; then
-    configTester -h
-  else
-    configTester "${@}"
+  if [ -d /opennms-data ]; then
+    echo "ERROR: The mount point for /opennms-data directory is deprecated."
+    echo "Use the following mount points instead:"
+    echo "  old mount points      -> new mount points          "
+    echo "  ---------------------------------------------------"
+    echo "  /opennms-data/rrd     -> /opt/opennms/share/rrd    "
+    echo "  /opennms-data/mibs    -> /opt/opennms/share/mibs   "
+    echo "  /opennms-data/logs    -> /opt/opennms/share/logs   "
+    echo "  /opennms-data/reports -> /opt/opennms/share/reports"
+    exit ${E_DEPRECATED_CONFIG}
+  fi
+
+  if [ -d /opt/opennms-etc-overlay ]; then
+    echo "ERROR: The mount point for /opt/opennms-etc-overlay directory is"
+    echo "deprecated in favour of /opt/opennms-overlay."
+    echo "Move your content from your etc overlay directory to"
+    echo "/opt/opennms-overlay/etc or mount it like this:"
+    echo "  old mount                -> new point               "
+    echo "  ----------------------------------------------------"
+    echo "  /opt/opennms-etc-overlay -> /opt/opennms-overlay/etc"
+    exit ${E_DEPRECATED_CONFIG}
+  fi
+
+  if [ -d /opt/opennms-etc-overlay ]; then
+    echo "ERROR: The mount point for /opt/opennms-etc-overlay directory is"
+    echo "deprecated in favour of /opt/opennms-overlay."
+    echo "Move your content from your etc overlay directory to"
+    echo "/opt/opennms-overlay/etc or mount it like this:"
+    echo ""
+    echo "  old mount                -> new point               "
+    echo "  ----------------------------------------------------"
+    echo "  /opt/opennms-etc-overlay -> /opt/opennms-overlay/etc"
+    exit ${E_DEPRECATED_CONFIG}
+  fi
+
+  if [ -d /opt/opennms-jetty-webinf-overlay ]; then
+    echo "ERROR: The mount point for /opt/opennms-jetty-webinf-overlay"
+    echo "directory is deprecated in favour of /opt/opennms-overlay. Move your"
+    echo "content from your etc overlay directory to /opt/opennms-overlay/etc"
+    echo "or mount it like this:"
+    echo ""
+    echo "  old mount                         -> new point                                         "
+    echo "  ---------------------------------------------------------------------------------------"
+    echo "  /opt/opennms-jetty-webinf-overlay -> /opt/opennms-overlay/jetty-webapps/opennms/WEB-INF"
+    exit ${E_DEPRECATED_CONFIG}
   fi
 }
 
