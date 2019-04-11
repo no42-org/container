@@ -40,7 +40,7 @@ LABEL maintainer="The OpenNMS Group" \
 
 WORKDIR /opt/opennms
 
-# ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 STOPSIGNAL SIGTERM
 

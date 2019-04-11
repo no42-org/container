@@ -1,7 +1,0 @@
-[template]
-src = "geomap-box.properties.tpl"
-dest = "/tmp/geomap-box.properties"
-keys = [
-    "/geomap/defaultstrategy",
-    "/geomap/defaultseverity"
-]
