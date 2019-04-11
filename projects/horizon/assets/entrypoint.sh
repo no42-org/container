@@ -124,7 +124,6 @@ deprecation() {
     echo "  ---------------------------------------------------"
     echo "  /opennms-data/rrd     -> /opt/opennms/share/rrd    "
     echo "  /opennms-data/mibs    -> /opt/opennms/share/mibs   "
-    echo "  /opennms-data/logs    -> /opt/opennms/share/logs   "
     echo "  /opennms-data/reports -> /opt/opennms/share/reports"
     exit ${E_DEPRECATED_CONFIG}
   fi
