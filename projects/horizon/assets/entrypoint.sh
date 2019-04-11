@@ -12,7 +12,6 @@
 
 OPENNMS_HOME="/opt/opennms"
 OPENNMS_OVERLAY="/opt/opennms-overlay"
-JAVA_HOME="/usr/lib/jvm/java-11"
 
 # Error codes
 E_ILLEGAL_ARGS=126
