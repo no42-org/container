@@ -3,7 +3,7 @@
 BAMBOO_HOST="https://bamboo.opennms.org"
 
 # We need a url
-if [[ ${#} -ne 1 ]]; then
+if [ "${#}" -ne 1 ]; then
     echo "Usage: $0 <url>"
     exit 1
 fi
@@ -17,8 +17,7 @@ BUILD_ID=$(echo "${BUILD}" | awk -F'-' '{ print $NF }')
 # Figure out RPM_VERSION
 RPM_VERSION=$(curl -s "${BAMBOO_HOST}/artifact/${PLAN_KEY}/shared/build-${BUILD_ID}/RPMs/" | grep -i opennms-core | sed -E 's/(.*>)(opennms-core-)(.*)\.noarch.rpm<\/a>.*/\3/g')
 
-RPMS_HORIZON=("opennms-${RPM_VERSION}.noarch.rpm"
-              "opennms-core-${RPM_VERSION}.noarch.rpm"
+RPMS_HORIZON=("opennms-core-${RPM_VERSION}.noarch.rpm"
               "opennms-webapp-jetty-${RPM_VERSION}.noarch.rpm")
 RPMS_MINION=("opennms-minion-${RPM_VERSION}.noarch.rpm"
              "opennms-minion-container-${RPM_VERSION}.noarch.rpm"
@@ -34,9 +33,10 @@ echo "BUILD: ${BUILD}"
 echo "PLAN_KEY: ${PLAN_KEY}"
 echo "BUILD_ID: ${BUILD_ID}"
 echo "RPM_VERSION: ${RPM_VERSION}"
+echo "RPMS: ${RPMS[*]}"
 
 # ensure everything is initialized
-if [[ -z "${BUILD}" ]] || [ -z "${PLAN_KEY}" ] || [[ -z "${BUILD_ID}" ]] || [[ -z "${RPM_VERSION}" ]]; then
+if [ -z "${BUILD}" ] || [ -z "${PLAN_KEY}" ] || [ -z "${BUILD_ID}" ] || [ -z "${RPM_VERSION}" ]; then
     echo "Something went wrong, not initialized correctly. Bailing.."
     exit 2
 fi
