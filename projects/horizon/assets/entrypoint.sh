@@ -37,20 +37,22 @@ usage() {
 }
 
 install() {
+  echo "Run OpenNMS install command to initialize or upgrade the database schema and configurations."
   ${JAVA_HOME}/bin/java -Dopennms.home="${OPENNMS_HOME}" -Dlog4j.configurationFile="${OPENNMS_HOME}"/etc/log4j2-tools.xml -cp "${OPENNMS_HOME}/lib/opennms_bootstrap.jar" org.opennms.bootstrap.InstallerBootstrap "${@}" || exit ${E_INIT_CONFIG}
 }
 
 configTester() {
+  echo "Run config tester to validate existing configuration files."
   ${JAVA_HOME}/bin/java -Dopennms.manager.class="org.opennms.netmgt.config.tester.ConfigTester" -Dopennms.home="${OPENNMS_HOME}" -Dlog4j.configurationFile="$OPENNMS_HOME"/etc/log4j2-tools.xml -jar $OPENNMS_HOME/lib/opennms_bootstrap.jar "${@}" || exit ${E_INIT_CONFIG}
 }
 
 processConfdTemplates() {
-  echo "Processing confd templates from ..."
+  echo "Processing confd templates using the backend ${CONFD_BACKEND}."
   confd -onetime -backend "${CONFD_BACKEND}"
 }
 
-# Initialize database and configure Karaf
-initOrUpgrade() {
+# Initialize configuration directory from etc-pristine when empty
+initConfigWhenEmpty() {
   if [ ! -d ${OPENNMS_HOME} ]; then
     echo "OpenNMS home directory doesn't exist in ${OPENNMS_HOME}."
     exit ${E_ILLEGAL_ARGS}
@@ -60,9 +62,6 @@ initOrUpgrade() {
     echo "No existing configuration in ${OPENNMS_HOME}/etc found. Initialize from etc-pristine."
     cp -r ${OPENNMS_HOME}/share/etc-pristine/* ${OPENNMS_HOME}/etc/ || exit ${E_INIT_CONFIG}
   fi
-  processConfdTemplates
-  echo "Initialize database and Karaf configuration and do install or upgrade the database schema."
-  install "-dis"
 }
 
 applyOverlayConfig() {
@@ -175,8 +174,8 @@ fi
 while getopts "fhit" flag; do
   case ${flag} in
     f)
-      applyOverlayConfig
       processConfdTemplates
+      applyOverlayConfig
       testConfig -t -a
       start
       exit
@@ -186,9 +185,11 @@ while getopts "fhit" flag; do
       exit
       ;;
     i)
-      initOrUpgrade
+      initConfigWhenEmpty
+      processConfdTemplates
       applyOverlayConfig
       testConfig -t -a
+      install -dis
       exit
       ;;
     t)
