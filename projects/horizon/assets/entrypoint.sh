@@ -91,6 +91,21 @@ start() {
 }
 
 testConfig() {
+  if [ -n "${OPENNMS_DBNAME}" ]; then
+    echo "WARNING: The OPENNMS_DBNAME is deprecated use OPENNMS_DATABASE_NAME instead."
+    export OPENNMS_DATABASE_NAME=${OPENNMS_DBNAME}
+  fi
+
+  if [ -n "${OPENNMS_DBUSER}" ]; then
+    echo "WARNING: The OPENNMS_DBUSER is deprecated use OPENNMS_DATABASE_USER instead."
+    export OPENNMS_DATABASE_USER=${OPENNMS_DBUSER}
+  fi
+
+  if [ -n "${OPENNMS_DBPASS}" ]; then
+    echo "WARNING: The OPENNMS_DBPASS is deprecated use OPENNMS_DATABASE_PASSWORD instead."
+    export OPENNMS_DATABASE_PASSWORD=${OPENNMS_DBPASS}
+  fi
+
   shift
   if [ "${#}" == "0" ]; then
     configTester -h
