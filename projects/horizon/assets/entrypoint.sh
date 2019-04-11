@@ -29,9 +29,10 @@ usage() {
   echo "folder in which needs to be mounted to ${OPENNMS_OVERLAY}."
   echo "Every file in this folder is overwriting files in ${OPENNMS_HOME}."
   echo ""
-  echo "-f: Start OpenNMS in foreground with an existing configuration."
   echo "-h: Show this help."
-  echo "-i: Initialize or update the database and OpenNMS configuration files. OpenNMS will be *NOT* started"
+  echo "-i: Initialize or update the database and OpenNMS configuration files, runs install -dis."
+  echo "    OpenNMS will be *NOT* started"
+  echo "-s: Start OpenNMS in foreground with an existing configuration."
   echo "-t: options: Run the config-tester, default is -h to show usage."
   echo ""
 }
@@ -171,15 +172,8 @@ if [[ "${#}" == 0 ]]; then
 fi
 
 # Evaluate arguments for build script.
-while getopts "fhit" flag; do
+while getopts "hist" flag; do
   case ${flag} in
-    f)
-      processConfdTemplates
-      applyOverlayConfig
-      testConfig -t -a
-      start
-      exit
-      ;;
     h)
       usage
       exit
@@ -190,6 +184,13 @@ while getopts "fhit" flag; do
       applyOverlayConfig
       testConfig -t -a
       install -dis
+      exit
+      ;;
+    s)
+      processConfdTemplates
+      applyOverlayConfig
+      testConfig -t -a
+      start
       exit
       ;;
     t)
