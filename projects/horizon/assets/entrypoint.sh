@@ -185,6 +185,12 @@ while getopts "hist" flag; do
       exit
       ;;
     s)
+      if [ ! -f ${OPENNMS_HOME/etc/configured} ]; then
+        echo "ERROR: Can't start OpenNMS Horizon. Configuration files not initialized."
+        echo "Run -i to initialize a configuration directory which creates"
+        echo "${OPENNMS_HOME/etc/configured}."
+        exit ${E_INIT_CONFIG}
+      fi
       processConfdTemplates
       applyOverlayConfig
       testConfig -t -a
