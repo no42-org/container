@@ -3,7 +3,7 @@ ARG BASE_IMAGE_VERSION="lts-alpine"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git curl
 
 RUN git clone https://github.com/seejohnrun/haste-server.git /app
 
