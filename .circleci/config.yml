@@ -38,7 +38,7 @@ commands:
 jobs:
   shellcheck:
     docker:
-      - image: no42org/shellcheck:0.5.0
+      - image: koalaman/shellcheck-alpine:v0.7.1
     steps:
       - checkout
       - run:
