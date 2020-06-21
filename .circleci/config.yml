@@ -1,29 +1,43 @@
-version: 2.0
+---
+version: 2.1
 
-defaults: &defaults
+executors:
+  docker-executor:
+    docker:
+      - image: circleci/buildpack-deps:focal
 
-aliases:
-  - &docker_environment
-    - image: docker:18.06.0-ce-git
-  - &checkout
-    path: ~/my-container
-  - &build_container
-    name: Building Container Image
-    command: ~/my-container/.circleci/build.sh
-  - &registry_login
-    name: Login Container Registry
-    command: docker login -u ${CONTAINER_REGISTRY_LOGIN} -p ${CONTAINER_REGISTRY_PASS}
-  - &common_steps
-    - checkout: *checkout
-    - setup_remote_docker
-    - run: apk add --no-cache bash
-    - run: *registry_login
-    - run: *build_container
-    - store_artifacts:
-        path: images/image.oci
-  - &common_environment
-    docker: *docker_environment
-    steps: *common_steps
+commands:
+  registry_login:
+    description: Login Container Registry
+    steps:
+      - run:
+          name: Login Container Registry
+          command: |
+            echo "${CONTAINER_REGISTRY_PASS}" | docker login --username ${CONTAINER_REGISTRY_LOGIN} --password-stdin
+
+  build:
+    description: Build Container OCI
+    parameters:
+      workdir:
+        default: "~/project"
+        type: string
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: false
+      - registry_login
+      - run:
+          name: Build Container OCI
+          command: |
+            pwd
+            cd << parameters.workdir >>
+            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
+              make push
+            else
+              make oci
+            fi
+      - store_artifacts:
+          path: images/image.oci
 
 jobs:
   shellcheck:
@@ -37,80 +51,16 @@ jobs:
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources -e SC2129,SC2001,SC2013
 
-  centos:
-    <<: *common_environment
-    working_directory: ~/my-container/projects/centos
-
-  confd:
-    <<: *common_environment
-    working_directory: ~/my-container/projects/confd
-
-  fedora:
-    <<: *common_environment
-    working_directory: ~/my-container/projects/fedora
-
-  shairport-sync:
-    <<: *common_environment
-    working_directory: ~/my-container/projects/shairport-sync
-
-  openjdk-8:
-    <<: *common_environment
-    working_directory: ~/my-container/projects/openjdk-8
-
-  openjdk-11:
-    <<: *common_environment
-    working_directory: ~/my-container/projects/openjdk-11
-
-  horizon:
-    <<: *common_environment
-    working_directory: ~/my-container/projects/horizon
-
-  minion:
-    <<: *common_environment
-    working_directory: ~/my-container/projects/minion
-
-  sentinel:
-    <<: *common_environment
-    working_directory: ~/my-container/projects/sentinel
+  hastebin:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/hastebin"
 
 workflows:
-  version: 2
-  container_build:
+  commit:
     jobs:
       - shellcheck
-      - shairport-sync:
+      - hastebin:
           requires:
             - shellcheck
-      - fedora:
-          requires:
-            - shellcheck
-      - centos:
-          requires:
-            - shellcheck
-      - confd:
-          requires:
-            - shellcheck
-            - centos
-      - openjdk-8:
-          requires:
-            - shellcheck
-            - confd
-      - openjdk-11:
-          requires:
-            - shellcheck
-            - confd
-      - horizon:
-          requires:
-            - shellcheck
-            - centos
-            - openjdk-8
-      - minion:
-          requires:
-            - shellcheck
-            - centos
-            - openjdk-8
-      - sentinel:
-          requires:
-            - shellcheck
-            - centos
-            - openjdk-8
