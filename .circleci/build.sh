@@ -2,7 +2,7 @@
 
 PROJECT="$(basename "$(pwd)")"
 
-echo "Detect changes in projects"
+echo "Detect changes in project dir ${PROJECT}"
 if git diff --name-only HEAD^...HEAD | grep "^projects/${PROJECT}"; then
   echo "Changes here, run the build"
   if [ "${CIRCLE_BRANCH}" == "master" ]; then
