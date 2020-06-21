@@ -31,11 +31,7 @@ commands:
           command: |
             pwd
             cd << parameters.workdir >>
-            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
-              make VERSION="$(cat version.txt).${CIRCLE_BUILD_NUM}" push
-            else
-              make oci
-            fi
+            ../../.circleci/build.sh
       - store_artifacts:
           path: images/image.oci
 
