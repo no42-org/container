@@ -57,10 +57,19 @@ jobs:
       - build:
           workdir: "./projects/hastebin"
 
+  freeradius:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/freeradius"
+
 workflows:
   commit:
     jobs:
       - shellcheck
       - hastebin:
+          requires:
+            - shellcheck
+      - freeradius:
           requires:
             - shellcheck
