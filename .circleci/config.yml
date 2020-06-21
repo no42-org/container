@@ -32,7 +32,7 @@ commands:
             pwd
             cd << parameters.workdir >>
             if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
-              make push
+              make VERSION="$(cat version.txt).${CIRCLE_BUILD_NUM}" push
             else
               make oci
             fi

@@ -41,10 +41,7 @@ build:
 		-t $(DOCKER_PROJECT) .
 
 tag: build
-	docker tag $(DOCKER_PROJECT) $(DOCKER_TAG); \
-	if [[ -n "${CIRCLE_BUILD_NUM}" ]]; then \
-	  docker tag $(DOCKER_PROJECT) $(DOCKER_TAG)-b$(CIRCLE_BUILD_NUM); \
-	fi; \
+	docker tag $(DOCKER_PROJECT) $(DOCKER_TAG)
 
 oci: tag
 	docker image save $(CONTAINER_PROJECT) -o images/image.oci
