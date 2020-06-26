@@ -59,6 +59,11 @@ jobs:
       - build:
           workdir: "./projects/freeradius"
 
+  murmur:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/murmur"
 workflows:
   commit:
     jobs:
@@ -67,5 +72,8 @@ workflows:
           requires:
             - shellcheck
       - freeradius:
+          requires:
+            - shellcheck
+      - murmur:
           requires:
             - shellcheck
