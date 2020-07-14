@@ -4,7 +4,7 @@ ARG BASE_IMAGE_VERSION="3.12"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-ARG MURMUR_VERSION="1.3.1"
+ARG MURMUR_VERSION="1.3.2"
 ARG MURMUR_URL="https://github.com/mumble-voip/mumble/releases/download/${MURMUR_VERSION}/murmur-static_x86-${MURMUR_VERSION}.tar.bz2"
 
 RUN mkdir -p /opt/murmur && \
