@@ -71,6 +71,12 @@ jobs:
       - build:
           workdir: "./projects/minecraft-rcon"
 
+  minecraft-overviewer:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/minecraft-overviewer"
+
 workflows:
   commit:
     jobs:
@@ -85,5 +91,8 @@ workflows:
           requires:
             - shellcheck
       - minecraft-rcon:
+          requires:
+            - shellcheck
+      - minecraft-overviewer:
           requires:
             - shellcheck
