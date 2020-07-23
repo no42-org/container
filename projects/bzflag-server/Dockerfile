@@ -7,6 +7,11 @@ RUN apt-get update && \
     apt-get -y install bzflag-server && \
     rm -rf /var/lib/apt/lists/*
 
+RUN addgroup --uid 1000 bzflag && \
+    adduser --uid 1000 --gid 1000 --no-create-home --disabled-login bzflag
+
+USER 1000
+
 ENTRYPOINT [ "/usr/games/bzfs" ]
 
 CMD [ "--help" ]
