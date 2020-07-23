@@ -77,6 +77,12 @@ jobs:
       - build:
           workdir: "./projects/minecraft-overviewer"
 
+  bzflag-server:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/bzflag-server"
+
 workflows:
   commit:
     jobs:
@@ -94,5 +100,8 @@ workflows:
           requires:
             - shellcheck
       - minecraft-overviewer:
+          requires:
+            - shellcheck
+      - bzflag-server:
           requires:
             - shellcheck
