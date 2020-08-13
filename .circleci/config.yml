@@ -83,6 +83,12 @@ jobs:
       - build:
           workdir: "./projects/bzflag-server"
 
+  onms-ovlsync:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/onms-ovlsync"
+
 workflows:
   commit:
     jobs:
@@ -103,5 +109,8 @@ workflows:
           requires:
             - shellcheck
       - bzflag-server:
+          requires:
+            - shellcheck
+      - onms-ovlsync:
           requires:
             - shellcheck
