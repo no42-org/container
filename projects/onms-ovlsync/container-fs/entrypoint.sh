@@ -4,7 +4,7 @@ set -o pipefail
 set -o nounset
 
 # Startup delay for monitoring directories
-STARTUP_DELAY="60"
+STARTUP_DELAY="30"
 
 OPENNMS_ETC_DIR="/opt/opennms/etc"
 
