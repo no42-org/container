@@ -18,13 +18,13 @@ if [[ ! -d "${OPENNMS_ETC_DIR}" ]]; then
 fi
 
 # Ensure the etc, imports and foreign-sources directory exist in overlay
-mkdir -p ${OVERLAY_ETC_DIR} ${OVERLAY_ETC_IMPORTS} ${OVERLAY_ETC_FOREIGN_SOURCES}
+mkdir -p "${OVERLAY_ETC_DIR}" "${OVERLAY_ETC_IMPORTS}" "${OVERLAY_ETC_FOREIGN_SOURCES}"
 
 # Make sure inotifywait and rsync is installed
 command -v inotifywait
 
 # We monitor files from /opt/opennms/etc so we have a relative path for file names
-cd ${OPENNMS_ETC_DIR}
+cd "${OPENNMS_ETC_DIR}"
 
 # Handle modified and deleted files
 # Arg is: "MODIFY ./foreign-sources/test.txt"
@@ -59,5 +59,5 @@ monitor() {
 
 # If we run in a side car we need to wait OpenNMS is started.
 echo "Delay startup for ${STARTUP_DELAY} seconds."
-sleep ${STARTUP_DELAY}
+sleep "${STARTUP_DELAY}"
 monitor "./"
