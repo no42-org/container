@@ -32,17 +32,17 @@ cd ${OPENNMS_ETC_DIR}
 # Arg is: "MODIFY ./foreign-sources/test.txt"
 action() {
   echo "Notified: ${1}"
-  FILE=( ${1} )
+  IFS=" " read -r -a FILE <<< "${1}"
   case ${FILE[0]} in
     "MODIFY")
       # We have to strip the ./ for copy, keep running on error
       echo "cp -r ${FILE[1]} ${OVERLAY_ETC_DIR}/${FILE[1]/.\//}"
-      cp -r ${FILE[1]} ${OVERLAY_ETC_DIR}/${FILE[1]/.\//} || :
+      cp -r "${FILE[1]}" "${OVERLAY_ETC_DIR}/${FILE[1]/.\//}" || :
       ;;
     "DELETE")
       # Same here strip the ./ for deleting the file in the overlay dir, keep running on error
       echo "rm ${OVERLAY_ETC_DIR}/${FILE[1]/.\//}"
-      rm ${OVERLAY_ETC_DIR}/${FILE[1]/.\//} || :
+      rm "${OVERLAY_ETC_DIR}/${FILE[1]/.\//}" || :
       ;;
     *)
       echo "No action for ${1}"
@@ -54,7 +54,7 @@ action() {
 # the MODIFY event is triggered as well.
 monitor() {
   echo "Start monitoring directory $(pwd) and sync changes to ${OVERLAY_ETC_DIR}."
-  inotifywait -r -m -e modify,delete --format '%e %w%f' "${1}" | while read NOTIFIED; do
+  inotifywait -r -m -e modify,delete --format '%e %w%f' "${1}" | while read -r NOTIFIED; do
     action "${NOTIFIED}"
   done
 }
