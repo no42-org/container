@@ -4,9 +4,7 @@ ARG BASE_IMAGE_VERSION="focal"
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
 RUN apt-get update && \
-    apt-get -y install inotify-tools \
-               git-core \
-               rsync && \
+    apt-get -y install inotify-tools && \
     rm -rf /var/lib/apt/lists/*
 
 ADD ./container-fs/entrypoint.sh /entrypoint.sh
