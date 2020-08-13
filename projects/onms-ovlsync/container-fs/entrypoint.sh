@@ -4,11 +4,10 @@ set -o pipefail
 set -o nounset
 
 # Startup delay for monitoring directories
-STARTUP_DELAY="30"
+STARTUP_DELAY="${STARTUP_DELAY:-60}"
+OPENNMS_ETC_DIR="${OPENNMS_ETC_DIR:-/opt/opennms/etc}"
 
-OPENNMS_ETC_DIR="/opt/opennms/etc"
-
-OVERLAY_ETC_DIR="/opt/opennms-overlay/etc"
+OVERLAY_ETC_DIR="${OPENNMS_ETC_DIR:-/opt/opennms-overlay/etc}"
 OVERLAY_ETC_IMPORTS="${OVERLAY_ETC_DIR}/imports"
 OVERLAY_ETC_FOREIGN_SOURCES="${OVERLAY_ETC_DIR}/foreign-sources"
 
