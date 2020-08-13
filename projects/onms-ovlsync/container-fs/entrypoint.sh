@@ -23,7 +23,6 @@ mkdir -p ${OVERLAY_ETC_DIR} ${OVERLAY_ETC_IMPORTS} ${OVERLAY_ETC_FOREIGN_SOURCES
 
 # Make sure inotifywait and rsync is installed
 command -v inotifywait
-command -v rsync
 
 # We monitor files from /opt/opennms/etc so we have a relative path for file names
 cd ${OPENNMS_ETC_DIR}
