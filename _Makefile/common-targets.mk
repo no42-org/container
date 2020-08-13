@@ -44,7 +44,7 @@ tag: build
 	docker tag $(DOCKER_PROJECT) $(DOCKER_TAG)
 
 oci: tag
-  mkdir -p images
+	mkdir -p images
 	docker image save $(CONTAINER_PROJECT) -o images/image.oci
 
 push: oci
