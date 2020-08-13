@@ -62,4 +62,4 @@ monitor() {
 # If we run in a side car we need to wait OpenNMS is started.
 echo "Delay startup for ${STARTUP_DELAY} seconds."
 sleep ${STARTUP_DELAY}
-monitor "./" &
+monitor "./"
