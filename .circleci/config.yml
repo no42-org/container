@@ -89,6 +89,12 @@ jobs:
       - build:
           workdir: "./projects/onms-ovlsync"
 
+  gobgp:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/gobgp"
+
 workflows:
   commit:
     jobs:
@@ -112,5 +118,8 @@ workflows:
           requires:
             - shellcheck
       - onms-ovlsync:
+          requires:
+            - shellcheck
+      - gobgp:
           requires:
             - shellcheck
