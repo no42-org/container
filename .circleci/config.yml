@@ -33,7 +33,7 @@ commands:
             cd << parameters.workdir >>
             ../../.circleci/build.sh
       - store_artifacts:
-          path: images/image.oci
+          path: << parameters.workdir >>/images/image.oci
 
 jobs:
   shellcheck:
