@@ -94,12 +94,17 @@ jobs:
     steps:
       - build:
           workdir: "./projects/gobgp"
-  log-io:
+  log-io-server:
     executor: docker-executor
     steps:
       - build:
-          workdir: "./projects/log.io"
+          workdir: "./projects/log.io-server"
 
+  log-io-input:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/log.io-input"
 workflows:
   commit:
     jobs:
@@ -128,6 +133,9 @@ workflows:
       - gobgp:
           requires:
             - shellcheck
-      - log-io:
+      - log-io-server:
+          requires:
+            - shellcheck
+      - log-io-input:
           requires:
             - shellcheck
