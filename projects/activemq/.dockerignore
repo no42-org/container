@@ -1,0 +1,12 @@
+# Directories
+.circleci
+.git
+.idea
+images
+
+# Files and file types
+*.iml
+*.txt
+.gitignore
+LICENSE
+Makefile

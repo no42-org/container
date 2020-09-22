@@ -105,6 +105,13 @@ jobs:
     steps:
       - build:
           workdir: "./projects/log.io-input"
+
+  activemq:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/activemq"
+
 workflows:
   commit:
     jobs:
@@ -137,5 +144,8 @@ workflows:
           requires:
             - shellcheck
       - log-io-input:
+          requires:
+            - shellcheck
+      - activemq:
           requires:
             - shellcheck
