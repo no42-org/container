@@ -124,6 +124,12 @@ jobs:
       - build:
           workdir: "./projects/mini-mail"
 
+  isc-dhcp:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/isc-dhcp"
+
 workflows:
   commit:
     jobs:
@@ -189,6 +195,11 @@ workflows:
           requires:
             - shellcheck
       - mini-mail:
+          context: 
+            - labmonkeys-credentials
+          requires:
+            - shellcheck
+      - isc-dhcp:
           context: 
             - labmonkeys-credentials
           requires:
