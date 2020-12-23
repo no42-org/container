@@ -10,7 +10,6 @@ build:
 		--build-arg BASE_IMAGE=$(BASE_IMAGE) \
 		--build-arg BASE_IMAGE_VERSION=$(BASE_IMAGE_VERSION) \
 		--build-arg BUILD_DATE=$(BUILD_DATE) \
-		--build-arg VERSION=$(VERSION) \
 		--build-arg NETSNMP_VERSION=$(NETSNMP_VERSION) \
 		--build-arg SOURCE=$(VCS_URL) \
 		--build-arg REVISION=$(VCS_REF) \
