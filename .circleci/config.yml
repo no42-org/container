@@ -113,51 +113,51 @@ workflows:
       - shellcheck
       - hastebin:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
       - freeradius:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
       - murmur:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
       - minecraft-rcon:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
       - minecraft-overviewer:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
       - bzflag-server:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
       - onms-ovlsync:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
       - gobgp:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
       - activemq:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
       - net-snmp:
           context: 
-            - registry
+            - Registry
           requires:
             - shellcheck
