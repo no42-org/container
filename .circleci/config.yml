@@ -117,6 +117,12 @@ jobs:
     steps:
       - build:
           workdir: "./projects/net-snmp"
+  
+  mini-mail:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/mini-mail"
 
 workflows:
   commit:
@@ -178,6 +184,11 @@ workflows:
           requires:
             - shellcheck
       - net-snmp:
+          context: 
+            - labmonkeys-credentials
+          requires:
+            - shellcheck
+      - mini-mail:
           context: 
             - labmonkeys-credentials
           requires:

@@ -1,13 +1,13 @@
 
-ARG BASE_IMAGE="centos"
-ARG BASE_IMAGE_VERSION="8"
+ARG BASE_IMAGE="ubuntu"
+ARG BASE_IMAGE_VERSION="latest"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-ARG GOBGP_VERSION="2.19.0"
-ARG CONFD_URL="https://github.com/osrg/gobgp/releases/download/v${GOBGP_VERSION}/gobgp_${GOBGP_VERSION}_linux_amd64.tar.gz"
+ARG VERSION="2.22.0"
+ARG GOBGP_URL="https://github.com/osrg/gobgp/releases/download/v${VERSION}/gobgp_${VERSION}_linux_amd64.tar.gz"
 
-ADD ${CONFD_URL} /tmp/gobgp.tar.gz
+ADD ${GOBGP_URL} /tmp/gobgp.tar.gz
 
 RUN tar xzf /tmp/gobgp.tar.gz -C /usr/bin; \
     rm -rf /tmp/gobgp.tar.gz
@@ -22,7 +22,7 @@ ARG BUILD_URL
 ARG BUILD_BRANCH
 
 LABEL org.opencontainers.image.created="${BUILD_DATE}" \
-      org.opencontainers.image.title="GoBGP ${GOBGP_VERSION}" \
+      org.opencontainers.image.title="GoBGP ${VERSION}" \
       org.opencontainers.image.source="${SOURCE}" \
       org.opencontainers.image.revision="${REVISION}" \
       org.opencontainers.image.version="${VERSION}" \
