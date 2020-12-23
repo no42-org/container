@@ -58,6 +58,19 @@ jobs:
     steps:
       - build:
           workdir: "./projects/centos"
+
+  openjdk-jdk-11:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/openjdk-jdk-11"
+
+  openjdk-jre-11:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/openjdk-jre-11"
+
   hastebin:
     executor: docker-executor
     steps:
@@ -140,6 +153,16 @@ workflows:
           requires:
             - shellcheck
       - centos:
+          context: 
+            - labmonkeys-credentials
+          requires:
+            - shellcheck
+      - openjdk-jdk-11:
+          context: 
+            - labmonkeys-credentials
+          requires:
+            - shellcheck
+      - openjdk-jre-11:
           context: 
             - labmonkeys-credentials
           requires:
