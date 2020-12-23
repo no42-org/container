@@ -17,8 +17,8 @@ RUN curl -L "http://www.apache.org/dyn/closer.cgi?filename=/activemq/${ACTIVEMQ_
     tar xzf activemq-bin.tar.gz --strip-components 1 && \
     useradd -r -M -d ${ACTIVEMQ_HOME} activemq && \
     chown -R activemq:activemq ${ACTIVEMQ_HOME} && \
-    chown -h activemq:activemq ${ACTIVEMQ_HOME}
-    # rm activemq-bin.tar.gz activemq-bin.tar.gz.sha512
+    chown -h activemq:activemq ${ACTIVEMQ_HOME} && \
+    rm activemq-bin.tar.gz activemq-bin.tar.gz.sha512
 
 USER activemq
 

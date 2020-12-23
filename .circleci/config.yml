@@ -94,17 +94,6 @@ jobs:
     steps:
       - build:
           workdir: "./projects/gobgp"
-  log-io-server:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/log.io-server"
-
-  log-io-input:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/log.io-input"
 
   activemq:
     executor: docker-executor
@@ -138,12 +127,6 @@ workflows:
           requires:
             - shellcheck
       - gobgp:
-          requires:
-            - shellcheck
-      - log-io-server:
-          requires:
-            - shellcheck
-      - log-io-input:
           requires:
             - shellcheck
       - activemq:
