@@ -143,6 +143,11 @@ jobs:
       - build:
           workdir: "./projects/isc-dhcp"
 
+  maven:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/maven"
 workflows:
   commit:
     jobs:
@@ -227,3 +232,8 @@ workflows:
             - labmonkeys-credentials
           requires:
             - shellcheck
+      - maven:
+          context: 
+            - labmonkeys-credentials
+          requires:
+            - openjdk-jdk-11
