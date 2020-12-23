@@ -1,6 +1,7 @@
 include ../../_Makefile/defaults.mk
 include ../../_Makefile/common-targets.mk
 
+DOCKER_ORG=labmonkeys
 GOBGP_VERSION=$(shell cat version.txt)
 BASE_IMAGE=centos
 BASE_IMAGE_VERSION=8

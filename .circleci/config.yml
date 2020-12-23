@@ -113,51 +113,51 @@ workflows:
       - shellcheck
       - hastebin:
           context: 
-            - Registry
+            - labmonkeys-credentials
           requires:
             - shellcheck
       - freeradius:
           context: 
-            - Registry
+            - labmonkeys-credentials
           requires:
             - shellcheck
       - murmur:
           context: 
-            - Registry
+            - no42-credentials
           requires:
             - shellcheck
       - minecraft-rcon:
           context: 
-            - Registry
+            - no42-credentials
           requires:
             - shellcheck
       - minecraft-overviewer:
           context: 
-            - Registry
+            - no42-credentials
           requires:
             - shellcheck
       - bzflag-server:
           context: 
-            - Registry
+            - no42-credentials
           requires:
             - shellcheck
       - onms-ovlsync:
           context: 
-            - Registry
+            - labmonkeys-credentials
           requires:
             - shellcheck
       - gobgp:
           context: 
-            - Registry
+            - labmonkeys-credentials
           requires:
             - shellcheck
       - activemq:
           context: 
-            - Registry
+            - labmonkeys-credentials
           requires:
             - shellcheck
       - net-snmp:
           context: 
-            - Registry
+            - labmonkeys-credentials
           requires:
             - shellcheck
