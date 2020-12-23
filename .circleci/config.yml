@@ -101,6 +101,12 @@ jobs:
       - build:
           workdir: "./projects/activemq"
 
+  net-snmp:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/net-snmp"
+
 workflows:
   commit:
     jobs:
@@ -130,5 +136,8 @@ workflows:
           requires:
             - shellcheck
       - activemq:
+          requires:
+            - shellcheck
+      - net-snmp:
           requires:
             - shellcheck
