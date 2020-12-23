@@ -47,6 +47,17 @@ jobs:
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources -e SC2129,SC2001,SC2013
 
+  ubuntu:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/ubuntu"
+
+  centos:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/centos"
   hastebin:
     executor: docker-executor
     steps:
@@ -111,6 +122,12 @@ workflows:
   commit:
     jobs:
       - shellcheck
+      - ubuntu:
+          context: 
+            - labmonkeys-credentials
+      - centos:
+          context: 
+            - labmonkeys-credentials
       - hastebin:
           context: 
             - labmonkeys-credentials
