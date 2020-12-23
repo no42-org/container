@@ -16,4 +16,3 @@ RUN apt-get update && \
 ENTRYPOINT [ "/usr/local/bin/mcrcon" ]
 
 CMD [ "-h" ]
-

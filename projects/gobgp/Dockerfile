@@ -38,4 +38,3 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}" \
 ENTRYPOINT [ "/usr/bin/gobgpd" ]
 
 CMD [ "--help" ]
-

@@ -26,4 +26,3 @@ CMD [ "-f", "-Le", "-LS0-6d", "-c", "/etc/snmp/snmpd.conf" ]
 ### Runtime information and not relevant at build time
 
 EXPOSE 161/udp
-

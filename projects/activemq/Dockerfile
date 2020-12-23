@@ -56,4 +56,3 @@ EXPOSE 1883/tcp 5672/tcp 8161/tcp  61613/tcp 61614/tcp 61616/tcp
 ENTRYPOINT [ "bin/activemq" ]
 
 CMD [ "console" ]
-

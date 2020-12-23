@@ -28,4 +28,3 @@ VOLUME [ "/data" ]
 ENTRYPOINT [ "/opt/murmur/murmur.x86" ]
 
 CMD [ "-h" ]
-
