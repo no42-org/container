@@ -162,11 +162,13 @@ workflows:
             - labmonkeys-credentials
           requires:
             - shellcheck
+            - ubuntu
       - openjdk-jre-11:
           context: 
             - labmonkeys-credentials
           requires:
             - shellcheck
+            - ubuntu
       - hastebin:
           context: 
             - labmonkeys-credentials
@@ -207,11 +209,13 @@ workflows:
             - labmonkeys-credentials
           requires:
             - shellcheck
+            - ubuntu
       - activemq:
           context: 
             - labmonkeys-credentials
           requires:
             - shellcheck
+            - centos
       - net-snmp:
           context: 
             - labmonkeys-credentials
@@ -222,6 +226,7 @@ workflows:
             - labmonkeys-credentials
           requires:
             - shellcheck
+            - ubuntu
       - isc-dhcp:
           context: 
             - labmonkeys-credentials
