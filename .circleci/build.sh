@@ -14,6 +14,6 @@ if git diff --name-only HEAD^...HEAD | grep "^projects/${PROJECT}"; then
     make oci
   fi
 else
-  echo "No changes detected"
+  make VERSION="$(cat version.txt).${CIRCLE_BUILD_NUM}" push
   exit 0
 fi
