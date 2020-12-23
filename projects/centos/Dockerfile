@@ -3,7 +3,8 @@ ARG BASE_IMAGE_VERSION="latest"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-RUN dnf -y --nodocs update && \
+RUN dnf -y install centos-release-stream && \
+    dnf -y distro-sync && \
     dnf clean all && \
     rm -rf /var/cache/yum
 
