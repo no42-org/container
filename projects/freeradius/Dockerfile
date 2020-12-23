@@ -42,4 +42,3 @@ EXPOSE 1812/udp 1813/udp 18120/tcp
 ENTRYPOINT [ "/usr/sbin/radiusd" ]
 
 CMD [ "--help" ]
-

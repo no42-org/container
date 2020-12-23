@@ -41,3 +41,4 @@ EXPOSE 7777
 ENV STORAGE_TYPE file
 
 ENTRYPOINT [ "./entrypoint.sh" ]
+
