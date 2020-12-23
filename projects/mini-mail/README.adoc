@@ -23,7 +23,7 @@ The mail server can be started without any further configuration parameters as t
 
 [source, bash]
 ----
-docker run --publish 25:25 --publish 143:143 opennms/mini-mail
+docker run --publish 25:25 --publish 143:143 quay.io/labmonkeys/mini-mail:20201223.1550
 ----
 
 == Usage it with OpenNMS
@@ -33,7 +33,7 @@ If you want to use this mail service with OpenNMS with docker compose you can si
 [source, yaml]
 ----
 mail:
-  image: opennms/mini-mail
+  image: quay.io/labmonkeys/mini-mail:20201223.1550
   container_name: mail
   ports:
     - "143:143/tcp"
