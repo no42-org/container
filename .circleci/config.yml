@@ -53,6 +53,12 @@ jobs:
       - build:
           workdir: "./projects/ubuntu"
 
+  alpine:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/alpine"
+
   centos:
     executor: docker-executor
     steps:
@@ -158,6 +164,11 @@ workflows:
           requires:
             - shellcheck
       - centos:
+          context: 
+            - labmonkeys-credentials
+          requires:
+            - shellcheck
+      - alpine:
           context: 
             - labmonkeys-credentials
           requires:

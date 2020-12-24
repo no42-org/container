@@ -1,12 +1,7 @@
-ARG BASE_IMAGE="alpoine"
-ARG BASE_IMAGE_VERSION="focal"
+ARG BASE_IMAGE="alpine"
+ARG BASE_IMAGE_VERSION="latest"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
-
-RUN apt-get update && \
-    apt-get -y --no-install-recommends install openjdk-11-jdk-headless && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 ARG BUILD_DATE="1970-01-01T00:00:00+0000"
 ARG VERSION
@@ -18,7 +13,7 @@ ARG BUILD_URL
 ARG BUILD_BRANCH
 
 LABEL org.opencontainers.image.created="${BUILD_DATE}" \
-      org.opencontainers.image.title="Ubuntu OpenJDK 11 JDK" \
+      org.opencontainers.image.title="Alpine ${BASE_IMAGE_VERSION}" \
       org.opencontainers.image.source="${SOURCE}" \
       org.opencontainers.image.revision="${REVISION}" \
       org.opencontainers.image.version="${VERSION}" \
