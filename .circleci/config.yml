@@ -193,3 +193,4 @@ workflows:
             - dockerhub
           requires:
             - shellcheck
+            - alpine
