@@ -5,7 +5,7 @@ FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
 RUN apt-get update && \
     apt-get -y dist-upgrade && \
-    apt-get install curl && \
+    apt-get -y install curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
