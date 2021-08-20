@@ -4,7 +4,7 @@ ARG BASE_IMAGE_VERSION="latest"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-ARG GOBGP_VERSION="2.22.0"
+ARG GOBGP_VERSION="2.30.0"
 ARG GOBGP_URL="https://github.com/osrg/gobgp/releases/download/v${GOBGP_VERSION}/gobgp_${GOBGP_VERSION}_linux_amd64.tar.gz"
 
 ADD ${GOBGP_URL} /tmp/gobgp.tar.gz

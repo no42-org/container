@@ -5,9 +5,8 @@ FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
 RUN apt-get update && \
     apt-get -y install bzflag-server && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN addgroup --uid 1000 bzflag && \
+    rm -rf /var/lib/apt/lists/* \
+    addgroup --uid 1000 bzflag && \
     adduser --uid 1000 --gid 1000 --no-create-home --disabled-login bzflag
 
 USER 1000

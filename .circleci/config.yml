@@ -13,7 +13,7 @@ commands:
       - run:
           name: Login Container Registry
           command: |
-            echo "${CONTAINER_REGISTRY_PASS}" | docker login --username ${CONTAINER_REGISTRY_LOGIN} --password-stdin quay.io
+            echo "${CONTAINER_REGISTRY_PASS}" | docker login --username ${CONTAINER_REGISTRY_LOGIN} --password-stdin docker.io
 
   build:
     description: Build Container OCI

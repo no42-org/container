@@ -3,12 +3,12 @@ ARG BASE_IMAGE_VERSION="latest"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-RUN apk add --no-cache freeradius \
-                       freeradius-sqlite \
-                       freeradius-radclient \
-                       freeradius-rest \
-                       sqlite \
-                       openssl-dev && \
+RUN apk add --no-cache freeradius=3.0.23-r0 \
+                       freeradius-sqlite=3.0.23-r0 \
+                       freeradius-radclient=3.0.23-r0 \
+                       freeradius-rest=3.0.23-r0 \
+                       sqlite=3.35.5-r0 \
+                       openssl-dev=1.1.1k-r0 && \
     chgrp radius /usr/sbin/radiusd && \
     chmod g+rwx /usr/sbin/radiusd
 

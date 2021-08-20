@@ -2,5 +2,4 @@ include ../../_Makefile/defaults.mk
 include ../../_Makefile/common-targets.mk
 
 BASE_IMAGE=alpine
-BASE_IMAGE_VERSION=3.12.3
-DOCKER_ORG=labmonkeys
+BASE_IMAGE_VERSION=3.14.1

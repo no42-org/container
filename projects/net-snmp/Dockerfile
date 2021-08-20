@@ -3,9 +3,7 @@ ARG BASE_IMAGE_VERSION="latest"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-ARG NETSNMP_VERSION="5.7.3-r11"
-
-RUN apk --no-cache add net-snmp>${NETSNMP_VERSION} && \
+RUN apk --no-cache add net-snmp=5.9-r4 && \
     mkdir -p /etc/snmp/conf.d
 
 COPY config/snmpd.conf /etc/snmp/snmpd.conf
