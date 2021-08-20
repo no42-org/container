@@ -71,17 +71,17 @@ jobs:
   ###
   ## Development and Runtimes
   #
-  openjdk-jdk-11:
+  openjdk-jdk:
     executor: docker-executor
     steps:
       - build:
-          workdir: "./projects/openjdk-jdk-11"
+          workdir: "./projects/openjdk-jdk"
 
-  openjdk-jre-11:
+  openjdk-jre:
     executor: docker-executor
     steps:
       - build:
-          workdir: "./projects/openjdk-jre-11"
+          workdir: "./projects/openjdk-jre"
 
   maven:
     executor: docker-executor
@@ -148,12 +148,12 @@ workflows:
             - dockerhub
           requires:
             - shellcheck
-      - openjdk-jdk-11:
+      - openjdk-jdk:
           context: 
             - dockerhub
           requires:
             - ubuntu
-      - openjdk-jre-11:
+      - openjdk-jre:
           context: 
             - dockerhub
           requires:
@@ -162,12 +162,12 @@ workflows:
           context: 
             - dockerhub
           requires:
-            - openjdk-jdk-11
+            - openjdk-jdk
       - activemq:
           context: 
             - dockerhub
           requires:
-            - centos
+            - openjdk-jre
       - freeradius:
           context: 
             - dockerhub
