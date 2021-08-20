@@ -47,12 +47,9 @@ jobs:
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources -e SC2129,SC2001,SC2013
 
-  ubuntu:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/ubuntu"
-
+  ###
+  ## OS base images
+  #
   alpine:
     executor: docker-executor
     steps:
@@ -65,6 +62,15 @@ jobs:
       - build:
           workdir: "./projects/centos"
 
+  ubuntu:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/ubuntu"
+
+  ###
+  ## Development and Runtimes
+  #
   openjdk-jdk-11:
     executor: docker-executor
     steps:
@@ -77,11 +83,29 @@ jobs:
       - build:
           workdir: "./projects/openjdk-jre-11"
 
+  maven:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/maven"
+
+  ###
+  ## Web Tools
+  #
   hastebin:
     executor: docker-executor
     steps:
       - build:
           workdir: "./projects/hastebin"
+
+  ###
+  ## Infrastructure
+  #
+  activemq:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/activemq"
 
   freeradius:
     executor: docker-executor
@@ -89,59 +113,11 @@ jobs:
       - build:
           workdir: "./projects/freeradius"
 
-  murmur:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/murmur"
-
-  minecraft-rcon:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/minecraft-rcon"
-
-  minecraft-overviewer:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/minecraft-overviewer"
-
-  bzflag-server:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/bzflag-server"
-
-  onms-ovlsync:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/onms-ovlsync"
-
   gobgp:
     executor: docker-executor
     steps:
       - build:
           workdir: "./projects/gobgp"
-
-  activemq:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/activemq"
-
-  net-snmp:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/net-snmp"
-  
-  mini-mail:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/mini-mail"
 
   isc-dhcp:
     executor: docker-executor
@@ -149,102 +125,96 @@ jobs:
       - build:
           workdir: "./projects/isc-dhcp"
 
-  maven:
+  mini-mail:
     executor: docker-executor
     steps:
       - build:
-          workdir: "./projects/maven"
+          workdir: "./projects/mini-mail"
+
+  murmur:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/murmur"
+
+  net-snmp:
+    executor: docker-executor
+    steps:
+      - build:
+          workdir: "./projects/net-snmp"
+
+
 workflows:
   commit:
     jobs:
       - shellcheck
-      - ubuntu:
+      - alpine:
           context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
             - shellcheck
       - centos:
           context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
             - shellcheck
-      - alpine:
+      - ubuntu:
           context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
             - shellcheck
       - openjdk-jdk-11:
           context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
             - ubuntu
       - openjdk-jre-11:
           context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
             - ubuntu
+      - maven:
+          context: 
+            - dockerhub
+          requires:
+            - openjdk-jdk-11
       - hastebin:
           context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
             - shellcheck
+      - activemq:
+          context: 
+            - dockerhub
+          requires:
+            - centos
       - freeradius:
           context: 
-            - labmonkeys-credentials
-          requires:
-            - shellcheck
-      - murmur:
-          context: 
-            - no42-credentials
-          requires:
-            - shellcheck
-      - minecraft-rcon:
-          context: 
-            - no42-credentials
-          requires:
-            - shellcheck
-      - minecraft-overviewer:
-          context: 
-            - no42-credentials
-          requires:
-            - shellcheck
-      - bzflag-server:
-          context: 
-            - no42-credentials
-          requires:
-            - shellcheck
-      - onms-ovlsync:
-          context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
             - shellcheck
       - gobgp:
           context: 
-            - labmonkeys-credentials
-          requires:
-            - ubuntu
-      - activemq:
-          context: 
-            - labmonkeys-credentials
-          requires:
-            - centos
-      - net-snmp:
-          context: 
-            - labmonkeys-credentials
-          requires:
-            - shellcheck
-      - mini-mail:
-          context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
             - ubuntu
       - isc-dhcp:
           context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
             - shellcheck
-      - maven:
+      - mini-mail:
           context: 
-            - labmonkeys-credentials
+            - dockerhub
           requires:
-            - openjdk-jdk-11
+            - ubuntu
+      - murmur:
+          context: 
+            - dockerhub
+          requires:
+            - shellcheck
+      - net-snmp:
+          context: 
+            - dockerhub
+          requires:
+            - shellcheck
