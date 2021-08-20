@@ -90,15 +90,6 @@ jobs:
           workdir: "./projects/maven"
 
   ###
-  ## Web Tools
-  #
-  hastebin:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/hastebin"
-
-  ###
   ## Infrastructure
   #
   activemq:
@@ -130,12 +121,6 @@ jobs:
     steps:
       - build:
           workdir: "./projects/mini-mail"
-
-  murmur:
-    executor: docker-executor
-    steps:
-      - build:
-          workdir: "./projects/murmur"
 
   net-snmp:
     executor: docker-executor
@@ -178,11 +163,6 @@ workflows:
             - dockerhub
           requires:
             - openjdk-jdk-11
-      - hastebin:
-          context: 
-            - dockerhub
-          requires:
-            - shellcheck
       - activemq:
           context: 
             - dockerhub
@@ -208,11 +188,6 @@ workflows:
             - dockerhub
           requires:
             - ubuntu
-      - murmur:
-          context: 
-            - dockerhub
-          requires:
-            - shellcheck
       - net-snmp:
           context: 
             - dockerhub
