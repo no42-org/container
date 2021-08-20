@@ -8,5 +8,5 @@ DOCKER_ORG         := labmonkeys
 DOCKER_PROJECT      = $(CONTAINER_PROJECT)
 VCS_URL            := $(CIRCLE_REPOSITORY_URL)
 VCS_REF            := $(shell git describe --always)
-VERSION            := latest
+VERSION            := $(shell cat version.txt)
 DOCKER_TAG          = $(DOCKER_REGISTRY)/$(DOCKER_ORG)/$(DOCKER_PROJECT):$(VERSION)

@@ -3,4 +3,4 @@ include ../../_Makefile/common-targets.mk
 
 DOCKER_ORG=labmonkeys
 BASE_IMAGE="ubuntu"
-BASE_IMAGE_VERSION="focal+20210815"
+BASE_IMAGE_VERSION="focal-20210815"
