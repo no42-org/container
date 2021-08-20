@@ -3,7 +3,7 @@ ARG BASE_IMAGE_VERSION="latest"
 
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
-RUN apk add --no-cache dhcp=4.4.2_p1-r0 \
+RUN apk add --no-cache dhcp=4.4.2_p1-r0 && \
     touch /var/lib/dhcp/dhcpd.leases
 
 ARG BUILD_DATE="1970-01-01T00:00:00+0000"
