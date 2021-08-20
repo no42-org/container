@@ -1,5 +1,5 @@
 include ../../_Makefile/defaults.mk
 include ../../_Makefile/common-targets.mk
 
-BASE_IMAGE=openjdk
-BASE_IMAGE_VERSION=11-jre
+BASE_IMAGE=labmonkeys/openjdk-jre
+BASE_IMAGE_VERSION=11.0.11-20210820

@@ -172,7 +172,7 @@ workflows:
           context: 
             - dockerhub
           requires:
-            - shellcheck
+            - alpine
       - gobgp:
           context: 
             - dockerhub
@@ -182,7 +182,7 @@ workflows:
           context: 
             - dockerhub
           requires:
-            - shellcheck
+            - alpine
       - mini-mail:
           context: 
             - dockerhub
@@ -192,5 +192,4 @@ workflows:
           context: 
             - dockerhub
           requires:
-            - shellcheck
             - alpine

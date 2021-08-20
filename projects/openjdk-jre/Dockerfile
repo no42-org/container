@@ -4,7 +4,7 @@ ARG BASE_IMAGE_VERSION="focal"
 FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}
 
 RUN apt-get update && \
-    apt-get -y --no-install-recommends install openjdk-11-jre-headless && \
+    apt-get -y --no-install-recommends install openjdk-11-jre-headless=11.0.11+9-0ubuntu2~20.04 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
